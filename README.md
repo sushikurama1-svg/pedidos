@@ -1,574 +1,781 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Kurama Sushi</title>
+<title>Kurama Sushi - Fondo Sakura</title>
 
-  <style>
+<style>
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-    body {
-      min-height: 100vh;
-      background:
+body {
+    min-height: 100vh;
+    overflow-x: hidden;
+
+    background:
         linear-gradient(
-          rgba(86, 48, 28, 0.15),
-          rgba(86, 48, 28, 0.15)
+            rgba(73, 42, 28, 0.12),
+            rgba(73, 42, 28, 0.12)
         ),
-        #9b6947;
+        #9b6748;
 
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    font-family: Georgia, "Times New Roman", serif;
+}
 
-      font-family: Georgia, "Times New Roman", serif;
 
-      overflow-x: hidden;
-    }
+/* =========================================
+   ESCENARIO PRINCIPAL
+========================================= */
 
-    /* ESCENARIO COMPLETO */
+.escenario {
+    position: relative;
 
-    .escenario {
-      position: relative;
+    width: 100%;
+    min-height: 100vh;
 
-      width: 100%;
-      min-height: 100vh;
+    overflow: hidden;
 
-      overflow: hidden;
-
-      background:
+    background:
         linear-gradient(
-          to bottom,
-          #6e432b 0%,
-          #8c5b3d 18%,
-          #b9825d 55%,
-          #9b6848 100%
+            to bottom,
+            #654029 0%,
+            #87563a 20%,
+            #b77f5c 60%,
+            #8c5a3d 100%
         );
-    }
+}
 
 
-    /* TECHO DE MADERA */
+/* =========================================
+   TECHO DE MADERA
+========================================= */
 
-    .techo {
-      position: absolute;
+.techo {
+    position: absolute;
 
-      top: 0;
-      left: 0;
+    top: 0;
+    left: 0;
 
-      width: 100%;
-      height: 17%;
+    width: 100%;
+    height: 17%;
 
-      background:
+    background:
         repeating-linear-gradient(
-          90deg,
-          #55331f 0px,
-          #55331f 8px,
-          #73472d 8px,
-          #73472d 65px,
-          #4b2c1c 65px,
-          #4b2c1c 73px
+            90deg,
+            #4a2b1b 0px,
+            #4a2b1b 9px,
+            #70462d 9px,
+            #70462d 70px,
+            #3f2518 70px,
+            #3f2518 79px
         );
 
-      border-bottom: 8px solid #3f2518;
+    border-bottom: 7px solid #382015;
 
-      z-index: 1;
+    z-index: 1;
+}
+
+
+/* =========================================
+   VIGAS
+========================================= */
+
+.viga {
+    position: absolute;
+
+    top: 0;
+
+    width: 19px;
+    height: 18%;
+
+    background: #3b2317;
+
+    box-shadow:
+        inset -4px 0 rgba(255,255,255,0.05),
+        4px 0 rgba(0,0,0,0.18);
+
+    z-index: 3;
+}
+
+.viga1 {
+    left: 17%;
+}
+
+.viga2 {
+    left: 50%;
+}
+
+.viga3 {
+    right: 17%;
+}
+
+
+/* =========================================
+   LÁMPARAS JAPONESAS
+========================================= */
+
+.lampara {
+    position: absolute;
+
+    top: 5%;
+
+    width: 78px;
+    height: 105px;
+
+    background:
+        linear-gradient(
+            to right,
+            #c87335,
+            #f2bd65,
+            #d67e38
+        );
+
+    border-radius:
+        12px 12px 25px 25px;
+
+    box-shadow:
+        0 10px 35px rgba(255, 190, 90, 0.35),
+        0 12px 30px rgba(0,0,0,0.25);
+
+    z-index: 5;
+}
+
+.lampara::before {
+    content: "";
+
+    position: absolute;
+
+    top: -55px;
+    left: 50%;
+
+    width: 4px;
+    height: 55px;
+
+    transform: translateX(-50%);
+
+    background: #302015;
+}
+
+.lampara::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 10px;
+
+    border-left: 2px solid rgba(110,55,20,0.2);
+    border-right: 2px solid rgba(110,55,20,0.2);
+
+    border-radius: 10px;
+}
+
+.lampara1 {
+    left: 5%;
+}
+
+.lampara2 {
+    left: 44%;
+
+    transform: scale(1.15);
+}
+
+.lampara3 {
+    right: 5%;
+}
+
+
+/* =========================================
+   PARED IZQUIERDA
+========================================= */
+
+.pared {
+    position: absolute;
+
+    left: 0;
+    top: 17%;
+
+    width: 21%;
+    height: 83%;
+
+    background:
+        repeating-linear-gradient(
+            90deg,
+            #51321f 0px,
+            #51321f 8px,
+            #825237 8px,
+            #825237 27px
+        );
+
+    box-shadow:
+        inset -12px 0 20px rgba(0,0,0,0.25);
+
+    z-index: 2;
+}
+
+
+/* =========================================
+   ESTANTERÍA DERECHA
+========================================= */
+
+.estanteria {
+    position: absolute;
+
+    right: 0;
+    top: 22%;
+
+    width: 22%;
+    height: 60%;
+
+    background:
+        linear-gradient(
+            to bottom,
+            #583520,
+            #765039
+        );
+
+    border-left: 12px solid #3d2417;
+
+    z-index: 2;
+}
+
+.repisa {
+    position: relative;
+
+    width: 100%;
+    height: 25%;
+
+    border-bottom: 10px solid #402517;
+}
+
+
+/* CERÁMICAS */
+
+.plato {
+    position: absolute;
+
+    bottom: 15px;
+
+    width: 38px;
+    height: 15px;
+
+    border-radius: 50%;
+
+    background: #d6c19f;
+
+    box-shadow:
+        0 3px 4px rgba(0,0,0,0.3);
+}
+
+.plato1 {
+    left: 25px;
+}
+
+.plato2 {
+    right: 30px;
+}
+
+.frase {
+    position: absolute;
+
+    bottom: 30px;
+    left: 45%;
+
+    width: 15px;
+    height: 42px;
+
+    border-radius: 4px;
+
+    background: #a9563c;
+}
+
+
+/* =========================================
+   RAMAS DE SAKURA
+========================================= */
+
+.rama {
+    position: absolute;
+
+    z-index: 8;
+
+    pointer-events: none;
+}
+
+
+/* RAMA SUPERIOR IZQUIERDA */
+
+.rama-izquierda {
+    top: 3%;
+    left: -3%;
+
+    width: 40%;
+    height: 35%;
+
+    transform: rotate(-8deg);
+}
+
+
+/* RAMA SUPERIOR DERECHA */
+
+.rama-derecha {
+    top: 8%;
+    right: -5%;
+
+    width: 42%;
+    height: 35%;
+
+    transform: scaleX(-1) rotate(-10deg);
+}
+
+
+/* RAMA INFERIOR IZQUIERDA */
+
+.rama-abajo {
+    bottom: 8%;
+    left: -5%;
+
+    width: 34%;
+    height: 30%;
+
+    transform: rotate(15deg);
+}
+
+
+/* TRONCO DE RAMA */
+
+.tronco {
+    position: absolute;
+
+    width: 75%;
+    height: 14px;
+
+    background:
+        linear-gradient(
+            to bottom,
+            #422719,
+            #70452d,
+            #392217
+        );
+
+    border-radius: 50px;
+
+    transform: rotate(-20deg);
+
+    box-shadow:
+        0 3px 5px rgba(0,0,0,0.25);
+}
+
+.rama-derecha .tronco {
+    transform: rotate(20deg);
+}
+
+.rama-abajo .tronco {
+    transform: rotate(-10deg);
+}
+
+
+/* RAMITAS */
+
+.ramita {
+    position: absolute;
+
+    width: 110px;
+    height: 7px;
+
+    background: #50301e;
+
+    border-radius: 20px;
+}
+
+
+/* =========================================
+   FLORES SAKURA
+========================================= */
+
+.flor {
+    position: absolute;
+
+    width: 38px;
+    height: 38px;
+
+    z-index: 10;
+}
+
+
+/* PÉTALOS */
+
+.flor span {
+    position: absolute;
+
+    width: 17px;
+    height: 22px;
+
+    background:
+        radial-gradient(
+            circle at 50% 75%,
+            #fff1f2 0%,
+            #f7c1cb 65%,
+            #df8e9e 100%
+        );
+
+    border-radius:
+        50% 50% 45% 45%;
+
+    transform-origin: bottom center;
+}
+
+
+/* CINCO PÉTALOS */
+
+.flor span:nth-child(1) {
+    top: 0;
+    left: 11px;
+    transform: rotate(0deg);
+}
+
+.flor span:nth-child(2) {
+    top: 9px;
+    left: 22px;
+    transform: rotate(72deg);
+}
+
+.flor span:nth-child(3) {
+    top: 20px;
+    left: 15px;
+    transform: rotate(144deg);
+}
+
+.flor span:nth-child(4) {
+    top: 18px;
+    left: 2px;
+    transform: rotate(216deg);
+}
+
+.flor span:nth-child(5) {
+    top: 8px;
+    left: 0;
+    transform: rotate(288deg);
+}
+
+
+/* CENTRO DE LA FLOR */
+
+.flor::after {
+    content: "";
+
+    position: absolute;
+
+    top: 14px;
+    left: 14px;
+
+    width: 10px;
+    height: 10px;
+
+    background: #c87a61;
+
+    border-radius: 50%;
+
+    box-shadow:
+        0 0 0 3px rgba(255,255,255,0.2);
+}
+
+
+/* =========================================
+   FLORES POSICIONADAS
+========================================= */
+
+.f1 {
+    top: 9%;
+    left: 9%;
+}
+
+.f2 {
+    top: 16%;
+    left: 20%;
+
+    transform: scale(0.7);
+}
+
+.f3 {
+    top: 6%;
+    right: 10%;
+
+    transform: scale(1.1);
+}
+
+.f4 {
+    top: 19%;
+    right: 20%;
+
+    transform: scale(0.65);
+}
+
+.f5 {
+    top: 30%;
+    left: 7%;
+
+    transform: scale(0.8);
+}
+
+.f6 {
+    bottom: 22%;
+    left: 8%;
+
+    transform: scale(0.75);
+}
+
+.f7 {
+    bottom: 15%;
+    right: 8%;
+
+    transform: scale(0.9);
+}
+
+
+/* =========================================
+   PÉTALOS SUELTOS
+========================================= */
+
+.petalo {
+    position: absolute;
+
+    width: 13px;
+    height: 20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f6c4cd,
+            #dd8798
+        );
+
+    border-radius:
+        70% 30% 70% 30%;
+
+    opacity: 0.9;
+
+    z-index: 9;
+
+    transform: rotate(35deg);
+}
+
+.p1 {
+    top: 26%;
+    left: 13%;
+}
+
+.p2 {
+    top: 34%;
+    right: 13%;
+}
+
+.p3 {
+    top: 43%;
+    left: 8%;
+}
+
+.p4 {
+    top: 52%;
+    right: 10%;
+}
+
+.p5 {
+    bottom: 28%;
+    left: 16%;
+}
+
+.p6 {
+    bottom: 20%;
+    right: 17%;
+}
+
+.p7 {
+    top: 25%;
+    right: 28%;
+}
+
+
+/* =========================================
+   MOSTRADOR
+========================================= */
+
+.mostrador {
+    position: absolute;
+
+    bottom: 0;
+    left: 0;
+
+    width: 100%;
+    height: 17%;
+
+    background:
+        linear-gradient(
+            to bottom,
+            #71452d,
+            #47291b
+        );
+
+    border-top: 10px solid #8b593a;
+
+    z-index: 4;
+}
+
+
+/* =========================================
+   HOJA CENTRAL DEL MENÚ
+========================================= */
+
+.hoja {
+    position: absolute;
+
+    left: 19%;
+    top: 11%;
+
+    width: 62%;
+    height: 82%;
+
+    background:
+        radial-gradient(
+            ellipse at 20% 15%,
+            rgba(255,255,255,0.7),
+            transparent 45%
+        ),
+
+        radial-gradient(
+            ellipse at 80% 85%,
+            rgba(150,110,70,0.12),
+            transparent 50%
+        ),
+
+        #f4ecd9;
+
+    box-shadow:
+        12px 15px 35px rgba(0,0,0,0.3);
+
+    z-index: 7;
+
+    overflow: hidden;
+
+    border-radius:
+        5px 8px 4px 7px;
+
+    transform: rotate(-0.2deg);
+}
+
+
+/* TEXTURA PAPEL */
+
+.hoja::before {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background-image:
+        radial-gradient(
+            rgba(100,70,40,0.2) 0.6px,
+            transparent 0.7px
+        );
+
+    background-size: 6px 6px;
+
+    opacity: 0.2;
+
+    pointer-events: none;
+}
+
+
+/* BORDE INFERIOR */
+
+.hoja::after {
+    content: "";
+
+    position: absolute;
+
+    bottom: 0;
+    left: 0;
+
+    width: 100%;
+    height: 9px;
+
+    background:
+        repeating-linear-gradient(
+            90deg,
+            #e5d9bd 0px,
+            #f4ecd9 25px,
+            #dfd0b0 45px,
+            #f4ecd9 65px
+        );
+}
+
+
+/* =========================================
+   RESPONSIVE PARA CELULAR
+========================================= */
+
+@media (max-width: 700px) {
+
+    .hoja {
+        left: 8%;
+        width: 84%;
+
+        top: 10%;
+        height: 83%;
     }
 
-
-    /* VIGAS DEL TECHO */
-
-    .viga {
-      position: absolute;
-
-      top: 0;
-
-      width: 18px;
-      height: 18%;
-
-      background: #432719;
-
-      box-shadow:
-        4px 0 0 rgba(255,255,255,0.04),
-        inset -4px 0 0 rgba(0,0,0,0.2);
-
-      z-index: 3;
+    .pared {
+        width: 7%;
     }
 
-    .viga.v1 {
-      left: 18%;
+    .estanteria {
+        width: 9%;
     }
-
-    .viga.v2 {
-      left: 50%;
-    }
-
-    .viga.v3 {
-      right: 18%;
-    }
-
-
-    /* LÁMPARAS */
 
     .lampara {
-      position: absolute;
-
-      top: 5%;
-
-      width: 90px;
-      height: 115px;
-
-      background:
-        linear-gradient(
-          to right,
-          #d58c39,
-          #f4c56d,
-          #d58c39
-        );
-
-      border-radius: 12px 12px 25px 25px;
-
-      box-shadow:
-        0 12px 30px rgba(255, 180, 70, 0.25),
-        0 15px 35px rgba(0,0,0,0.25);
-
-      z-index: 4;
-    }
-
-    .lampara::before {
-      content: "";
-
-      position: absolute;
-
-      top: -55px;
-      left: 50%;
-
-      width: 4px;
-      height: 55px;
-
-      transform: translateX(-50%);
-
-      background: #352014;
-    }
-
-    .lampara::after {
-      content: "";
-
-      position: absolute;
-
-      inset: 12px;
-
-      border-left: 2px solid rgba(110,60,20,0.25);
-      border-right: 2px solid rgba(110,60,20,0.25);
-
-      border-radius: 10px;
-    }
-
-    .lampara1 {
-      left: 5%;
+        width: 52px;
+        height: 75px;
     }
 
     .lampara2 {
-      left: 43%;
-      transform: scale(1.15);
+        transform: scale(0.8);
     }
 
-    .lampara3 {
-      right: 7%;
+    .rama-izquierda {
+        width: 48%;
     }
 
-
-    /* PARED IZQUIERDA */
-
-    .pared-izquierda {
-      position: absolute;
-
-      left: 0;
-      top: 17%;
-
-      width: 20%;
-      height: 83%;
-
-      background:
-        repeating-linear-gradient(
-          90deg,
-          #583822 0px,
-          #583822 9px,
-          #855538 9px,
-          #855538 27px
-        );
-
-      box-shadow:
-        inset -10px 0 20px rgba(0,0,0,0.25);
-
-      z-index: 2;
+    .rama-derecha {
+        width: 48%;
     }
 
-
-    /* ESTANTES DERECHOS */
-
-    .estantes {
-      position: absolute;
-
-      right: 0;
-      top: 22%;
-
-      width: 23%;
-      height: 58%;
-
-      background:
-        linear-gradient(
-          to bottom,
-          #5b3823,
-          #795036
-        );
-
-      border-left: 12px solid #482b1b;
-
-      box-shadow:
-        inset 8px 0 12px rgba(0,0,0,0.25);
-
-      z-index: 2;
+    .flor {
+        transform: scale(0.75);
     }
 
-    .estante {
-      height: 25%;
+}
 
-      border-bottom: 10px solid #442819;
-
-      position: relative;
-    }
-
-    .estante::before,
-    .estante::after {
-      content: "";
-
-      position: absolute;
-
-      bottom: 15px;
-
-      width: 30px;
-      height: 42px;
-
-      background: #b48a61;
-
-      border-radius: 4px;
-    }
-
-    .estante::before {
-      left: 25px;
-    }
-
-    .estante::after {
-      right: 25px;
-    }
-
-
-    /* BOTELLAS DECORATIVAS */
-
-    .botella {
-      position: absolute;
-
-      width: 18px;
-      height: 45px;
-
-      bottom: 25px;
-
-      border-radius: 4px;
-
-      background: #b45a3a;
-
-      box-shadow:
-        0 3px 5px rgba(0,0,0,0.3);
-    }
-
-    .botella.b1 {
-      left: 55px;
-    }
-
-    .botella.b2 {
-      left: 90px;
-      background: #6e4931;
-    }
-
-    .botella.b3 {
-      right: 55px;
-      background: #a17c48;
-    }
-
-
-    /* MESA / MOSTRADOR INFERIOR */
-
-    .mostrador {
-      position: absolute;
-
-      left: 0;
-      bottom: 0;
-
-      width: 100%;
-      height: 18%;
-
-      background:
-        linear-gradient(
-          to bottom,
-          #70432b,
-          #4d2d1d
-        );
-
-      border-top: 12px solid #8b5a3a;
-
-      box-shadow:
-        0 -10px 25px rgba(0,0,0,0.25);
-
-      z-index: 4;
-    }
-
-
-    /* OBJETOS SOBRE EL MOSTRADOR */
-
-    .objeto {
-      position: absolute;
-
-      bottom: 9%;
-
-      width: 45px;
-      height: 50px;
-
-      background: #7b5035;
-
-      border-radius: 5px;
-
-      box-shadow:
-        0 5px 8px rgba(0,0,0,0.3);
-    }
-
-    .objeto1 {
-      left: 8%;
-    }
-
-    .objeto2 {
-      left: 13%;
-      width: 35px;
-      height: 65px;
-    }
-
-    .objeto3 {
-      right: 12%;
-      width: 50px;
-      height: 38px;
-    }
-
-
-    /* BANQUETA */
-
-    .banqueta {
-      position: absolute;
-
-      right: 25%;
-      bottom: 3%;
-
-      width: 115px;
-      height: 65px;
-
-      background: #6d2e28;
-
-      border-radius: 12px 12px 5px 5px;
-
-      box-shadow:
-        0 10px 20px rgba(0,0,0,0.3);
-
-      z-index: 3;
-    }
-
-    .banqueta::before,
-    .banqueta::after {
-      content: "";
-
-      position: absolute;
-
-      bottom: -75px;
-
-      width: 10px;
-      height: 75px;
-
-      background: #442819;
-    }
-
-    .banqueta::before {
-      left: 15px;
-    }
-
-    .banqueta::after {
-      right: 15px;
-    }
-
-
-    /* HOJA CENTRAL */
-
-    .hoja {
-      position: absolute;
-
-      left: 19%;
-      top: 11%;
-
-      width: 62%;
-      height: 82%;
-
-      background:
-        radial-gradient(
-          ellipse at 20% 15%,
-          rgba(255,255,255,0.55),
-          transparent 40%
-        ),
-        radial-gradient(
-          ellipse at 80% 85%,
-          rgba(190,160,120,0.12),
-          transparent 45%
-        ),
-        #f4ecd9;
-
-      border-radius:
-        4px 7px 5px 9px;
-
-      box-shadow:
-        12px 14px 30px rgba(0,0,0,0.28),
-        inset 0 0 30px rgba(120,80,40,0.06);
-
-      transform: rotate(-0.25deg);
-
-      z-index: 6;
-
-      overflow: hidden;
-    }
-
-
-    /* TEXTURA DEL PAPEL */
-
-    .hoja::before {
-      content: "";
-
-      position: absolute;
-
-      inset: 0;
-
-      opacity: 0.18;
-
-      background-image:
-        radial-gradient(
-          rgba(100,70,40,0.25) 0.6px,
-          transparent 0.7px
-        );
-
-      background-size: 5px 5px;
-
-      pointer-events: none;
-    }
-
-
-    /* BORDE IRREGULAR */
-
-    .hoja::after {
-      content: "";
-
-      position: absolute;
-
-      left: -2px;
-      right: -2px;
-      bottom: -2px;
-
-      height: 10px;
-
-      background:
-        repeating-linear-gradient(
-          90deg,
-          #e8ddc4 0px,
-          #f4ecd9 25px,
-          #e4d7bb 45px,
-          #f4ecd9 65px
-        );
-
-      opacity: 0.8;
-    }
-
-
-    /* DECORACIÓN PEQUEÑA DEL PAPEL */
-
-    .adorno {
-      position: absolute;
-
-      width: 35px;
-      height: 35px;
-
-      border: 2px solid rgba(142, 87, 44, 0.25);
-
-      border-radius: 50%;
-    }
-
-    .adorno1 {
-      top: 20px;
-      right: 25px;
-    }
-
-    .adorno2 {
-      bottom: 25px;
-      left: 25px;
-    }
-
-
-    /* RESPONSIVE */
-
-    @media (max-width: 700px) {
-
-      .hoja {
-        left: 7%;
-        width: 86%;
-        top: 10%;
-        height: 82%;
-      }
-
-      .pared-izquierda {
-        width: 8%;
-      }
-
-      .estantes {
-        width: 10%;
-      }
-
-      .lampara {
-        width: 55px;
-        height: 80px;
-      }
-
-      .lampara2 {
-        transform: scale(0.9);
-      }
-
-      .banqueta {
-        display: none;
-      }
-
-    }
-
-  </style>
+</style>
 </head>
 
 
 <body>
 
-  <main class="escenario">
+<div class="escenario">
 
     <!-- TECHO -->
     <div class="techo"></div>
 
     <!-- VIGAS -->
-    <div class="viga v1"></div>
-    <div class="viga v2"></div>
-    <div class="viga v3"></div>
+    <div class="viga viga1"></div>
+    <div class="viga viga2"></div>
+    <div class="viga viga3"></div>
 
 
     <!-- LÁMPARAS -->
@@ -577,50 +784,100 @@
     <div class="lampara lampara3"></div>
 
 
-    <!-- PARED IZQUIERDA -->
-    <div class="pared-izquierda"></div>
+    <!-- PARED -->
+    <div class="pared"></div>
 
 
-    <!-- ESTANTES -->
-    <div class="estantes">
+    <!-- ESTANTERÍA -->
+    <div class="estanteria">
 
-      <div class="estante">
-        <div class="botella b1"></div>
-        <div class="botella b2"></div>
-      </div>
+        <div class="repisa">
+            <div class="plato plato1"></div>
+            <div class="plato plato2"></div>
+        </div>
 
-      <div class="estante">
-        <div class="botella b3"></div>
-      </div>
+        <div class="repisa">
+            <div class="frase"></div>
+        </div>
 
-      <div class="estante"></div>
+        <div class="repisa">
+            <div class="plato plato1"></div>
+        </div>
 
-      <div class="estante"></div>
+        <div class="repisa"></div>
 
     </div>
+
+
+    <!-- =====================================
+         RAMAS SAKURA
+    ====================================== -->
+
+    <div class="rama rama-izquierda">
+        <div class="tronco"></div>
+    </div>
+
+    <div class="rama rama-derecha">
+        <div class="tronco"></div>
+    </div>
+
+    <div class="rama rama-abajo">
+        <div class="tronco"></div>
+    </div>
+
+
+    <!-- =====================================
+         FLORES
+    ====================================== -->
+
+    <div class="flor f1">
+        <span></span><span></span><span></span><span></span><span></span>
+    </div>
+
+    <div class="flor f2">
+        <span></span><span></span><span></span><span></span><span></span>
+    </div>
+
+    <div class="flor f3">
+        <span></span><span></span><span></span><span></span><span></span>
+    </div>
+
+    <div class="flor f4">
+        <span></span><span></span><span></span><span></span><span></span>
+    </div>
+
+    <div class="flor f5">
+        <span></span><span></span><span></span><span></span><span></span>
+    </div>
+
+    <div class="flor f6">
+        <span></span><span></span><span></span><span></span><span></span>
+    </div>
+
+    <div class="flor f7">
+        <span></span><span></span><span></span><span></span><span></span>
+    </div>
+
+
+    <!-- PÉTALOS SUELTOS -->
+
+    <div class="petalo p1"></div>
+    <div class="petalo p2"></div>
+    <div class="petalo p3"></div>
+    <div class="petalo p4"></div>
+    <div class="petalo p5"></div>
+    <div class="petalo p6"></div>
+    <div class="petalo p7"></div>
 
 
     <!-- MOSTRADOR -->
     <div class="mostrador"></div>
 
-    <div class="objeto objeto1"></div>
-    <div class="objeto objeto2"></div>
-    <div class="objeto objeto3"></div>
-
-
-    <!-- BANQUETA -->
-    <div class="banqueta"></div>
-
 
     <!-- HOJA CENTRAL -->
-    <section class="hoja">
+    <div class="hoja"></div>
 
-      <div class="adorno adorno1"></div>
-      <div class="adorno adorno2"></div>
-
-    </section>
-
-  </main>
+</div>
 
 </body>
 </html>
