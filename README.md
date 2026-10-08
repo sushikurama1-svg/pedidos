@@ -173,7 +173,11 @@
                             </div>
                             <div class="p-4">
                                 <h3 class="text-lg font-bold text-white mb-1">${p.name}</h3>
-                                <p class="text-gray-400 text-xs leading-relaxed mb-4">${p.desc}</p>                             </div>                         </div>                         <div class="p-4 pt-0 flex justify-between items-center">                             <span class="text-xl font-extrabold text-neon-cyan">$${p.price.toLocaleString('es-CL')}</span>
+                                <p class="text-gray-400 text-xs leading-relaxed mb-4">${p.desc}</p>
+                            </div>
+                        </div>
+                        <div class="p-4 pt-0 flex justify-between items-center">
+                            <span class="text-xl font-extrabold text-neon-cyan">$${p.price.toLocaleString('es-CL')}</span>
                             <button onclick="addToCart(${p.id})" class="bg-gradient-to-r from-neon-pink to-neon-purple hover:opacity-90 text-white font-bold text-xs px-4 py-2 rounded-xl flex items-center gap-1 shadow-md shadow-neon-pink/30 transition-transform active:scale-95">
                                 <i class="fa-solid fa-plus"></i> Añadir
                             </button>
@@ -232,9 +236,76 @@
             container.innerHTML = cart.map(i => `
                 <div class="flex justify-between items-center py-3">
                     <div>
-                        <h4 class="font-semibold text-sm text-white">${i.name}</h4>                         <span class="text-xs text-gray-400">$${i.price.toLocaleString('es-CL')} c/u</span>
+                        <h4 class="font-semibold text-sm text-white">${i.name}</h4>
+                        <span class="text-xs text-gray-400">$${i.price.toLocaleString('es-CL')} c/u</span>
                     </div>
                     <div class="flex items-center gap-2">
                         <button onclick="changeQty(${i.id}, -1)" class="w-7 h-7 bg-white/10 hover:bg-white/20 text-white rounded-lg font-bold text-xs">-</button>
                         <span class="text-sm font-bold text-white px-1">${i.qty}</span>
-                        <button onclick="changeQty(${i.id}, 1)" class="w-7 h-7 bg-white/10 hover:bg-white/
+                        <button onclick="changeQty(${i.id}, 1)" class="w-7 h-7 bg-white/10 hover:bg-white/20 text-white rounded-lg font-bold text-xs">+</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function toggleAddressInput() {
+            const type = document.getElementById('delivery-type').value;
+            const addrInput = document.getElementById('cust-address');
+            if (type === 'Retiro') {
+                addrInput.classList.add('hidden');
+            } else {
+                addrInput.classList.remove('hidden');
+            }
+        }
+
+        function openModal() {
+            document.getElementById('cart-modal').classList.remove('hidden');
+            document.getElementById('cart-modal').classList.add('flex');
+        }
+
+        function closeModal() {
+            document.getElementById('cart-modal').classList.add('hidden');
+            document.getElementById('cart-modal').classList.remove('flex');
+        }
+
+        function sendWhatsApp() {
+            if (cart.length === 0) {
+                alert("Agrega productos a tu carrito primero.");
+                return;
+            }
+
+            const name = document.getElementById('cust-name').value.trim();
+            const type = document.getElementById('delivery-type').value;
+            const address = document.getElementById('cust-address').value.trim();
+
+            if (!name) {
+                alert("Por favor escribe tu nombre.");
+                return;
+            }
+
+            if (type === 'Delivery' && !address) {
+                alert("Por favor escribe tu dirección para el envío.");
+                return;
+            }
+
+            let msg = `🍣 *NUEVO PEDIDO - KURAMA SUSHI*\n`;
+            msg += `👤 *Cliente:* ${name}\n`;
+            msg += `🛵 *Tipo:* ${type}\n`;
+            if (type === 'Delivery') msg += `📍 *Dirección:* ${address}\n`;
+            msg += `\n📋 *Detalle del Pedido:*\n`;
+
+            cart.forEach(i => {
+                msg += `• ${i.qty}x ${i.name} ($${(i.price * i.qty).toLocaleString('es-CL')})\n`;
+            });
+
+            const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            msg += `\n💰 *Total a Pagar:* $${totalPrice.toLocaleString('es-CL')}`;
+
+            const phone = "56933570798";
+            window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        renderProducts();
+    </script>
+</body>
+</html>
