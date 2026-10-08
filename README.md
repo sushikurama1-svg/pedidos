@@ -102,3 +102,8 @@
     }
 
     /* Aquí
+    tu-repositorio/
+│
+├── index.html
+├── fondo.jpg
+└── logo.png
