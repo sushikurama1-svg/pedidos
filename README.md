@@ -4,884 +4,518 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Kurama Sushi</title>
+<title>Kurama Sushi | Catálogo</title>
 
 <style>
 /* =========================================================
    KURAMA SUSHI
-   TODO EL SITIO EN UN SOLO ARCHIVO
+   CATÁLOGO + CONFIGURADOR + CARRITO
    ========================================================= */
 
-:root{
-    --vino:#7b1e27;
-    --vino-oscuro:#4d1017;
-    --dorado:#c89b52;
-    --crema:#f8f1df;
-    --papel:#fffaf0;
-    --marron:#351c16;
-    --marron2:#5b3426;
-    --texto:#2b1814;
-    --sombra:0 15px 40px rgba(0,0,0,.25);
+:root {
+    --vino: #7d1f25;
+    --vino-oscuro: #541318;
+    --dorado: #b89452;
+    --crema: #f7f0df;
+    --papel: #fffdf6;
+    --madera: #3b2118;
+    --madera2: #5a3324;
+    --texto: #30231d;
+    --verde: #536548;
+    --sombra: rgba(0,0,0,.25);
 }
 
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
-html{
-    scroll-behavior:smooth;
+html {
+    scroll-behavior: smooth;
 }
 
-body{
-    font-family:Georgia, "Times New Roman", serif;
-    color:var(--texto);
+body {
+    font-family: Georgia, "Times New Roman", serif;
+    color: var(--texto);
     background:
-        linear-gradient(rgba(45,23,16,.35),rgba(45,23,16,.55)),
-        repeating-linear-gradient(
-            90deg,
-            #4a281c 0px,
-            #4a281c 35px,
-            #3b2018 36px,
-            #3b2018 40px
-        );
-    min-height:100vh;
+        linear-gradient(rgba(48,27,20,.55),rgba(48,27,20,.55)),
+        url("fondo-kurama.jpg") center top / cover fixed;
+    min-height: 100vh;
 }
 
 /* =========================================================
-   FONDO RESTAURANTE
+   ENCABEZADO
    ========================================================= */
 
-.restaurant-bg{
-    position:fixed;
-    inset:0;
-    z-index:-2;
-    overflow:hidden;
-    background:
-        radial-gradient(circle at 50% 20%,rgba(255,190,100,.18),transparent 30%),
-        linear-gradient(90deg,#291712,#633a27 25%,#44251c 50%,#633a27 75%,#291712);
+header {
+    padding: 25px 15px 15px;
+    text-align: center;
+    color: white;
 }
 
-.restaurant-bg::before{
-    content:"";
-    position:absolute;
-    inset:0;
-    background:
-        repeating-linear-gradient(
-            90deg,
-            rgba(255,255,255,.025) 0px,
-            rgba(255,255,255,.025) 2px,
-            transparent 3px,
-            transparent 70px
-        ),
-        repeating-linear-gradient(
-            0deg,
-            rgba(0,0,0,.12) 0px,
-            rgba(0,0,0,.12) 3px,
-            transparent 4px,
-            transparent 55px
-        );
+.logo {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 18px;
 }
 
-/* techo */
-
-.ceiling{
-    position:absolute;
-    top:0;
-    left:0;
-    width:100%;
-    height:18%;
-    background:
-        repeating-linear-gradient(
-            90deg,
-            #2b1711 0px,
-            #2b1711 25px,
-            #573322 26px,
-            #573322 90px
-        );
-    border-bottom:12px solid #24130e;
+.logo-icon {
+    font-size: 65px;
+    line-height: 1;
+    filter: drop-shadow(0 3px 4px #000);
 }
 
-.ceiling::after{
-    content:"";
-    position:absolute;
-    inset:20px 0 0;
-    background:
-        repeating-linear-gradient(
-            0deg,
-            transparent 0,
-            transparent 40px,
-            rgba(20,10,7,.7) 41px,
-            rgba(20,10,7,.7) 50px
-        );
+.logo h1 {
+    color: #9d252b;
+    font-size: clamp(35px, 8vw, 58px);
+    letter-spacing: 4px;
+    text-shadow: 1px 2px 0 #fff;
 }
 
-/* =========================================================
-   LÁMPARAS
-   ========================================================= */
-
-.lamp{
-    position:absolute;
-    width:70px;
-    height:125px;
-    border-radius:45%;
-    background:
-        repeating-linear-gradient(
-            0deg,
-            rgba(120,50,20,.35) 0px,
-            rgba(120,50,20,.35) 3px,
-            rgba(255,210,120,.85) 4px,
-            rgba(255,210,120,.85) 13px
-        );
-    box-shadow:
-        0 0 35px rgba(255,176,68,.65),
-        inset 0 0 25px rgba(255,225,150,.4);
-    z-index:1;
-}
-
-.lamp::before{
-    content:"";
-    position:absolute;
-    width:2px;
-    height:70px;
-    background:#18100d;
-    top:-70px;
-    left:50%;
-}
-
-.lamp.one{top:8%;left:8%;transform:rotate(-3deg);}
-.lamp.two{top:5%;left:44%;width:90px;height:145px;}
-.lamp.three{top:8%;right:8%;transform:rotate(3deg);}
-.lamp.four{top:28%;left:4%;width:55px;height:95px;}
-.lamp.five{top:36%;right:4%;width:55px;height:95px;}
-.lamp.six{bottom:22%;left:7%;width:42px;height:75px;background:#8e392a;}
-
-/* =========================================================
-   DECORACIÓN LATERAL
-   ========================================================= */
-
-.left-wall,
-.right-shelf{
-    position:absolute;
-    top:18%;
-    bottom:0;
-}
-
-.left-wall{
-    left:0;
-    width:20%;
-    background:
-        repeating-linear-gradient(
-            90deg,
-            #271610 0px,
-            #271610 8px,
-            #583321 9px,
-            #583321 25px
-        );
-    opacity:.9;
-}
-
-.right-shelf{
-    right:0;
-    width:22%;
-    background:#321b14;
-    border-left:12px solid #1e100c;
-    padding:25px 15px;
-}
-
-.shelf-row{
-    height:22%;
-    margin-bottom:10px;
-    border:8px solid #5b3424;
-    background:#24130f;
-    display:flex;
-    justify-content:space-around;
-    align-items:center;
-    box-shadow:inset 0 0 20px #000;
-}
-
-.bottle,
-.bowl,
-.plate{
-    display:block;
-    position:relative;
-}
-
-.bottle{
-    width:20px;
-    height:45px;
-    border-radius:5px 5px 8px 8px;
-    background:#58705c;
-}
-
-.bottle::before{
-    content:"";
-    position:absolute;
-    width:8px;
-    height:10px;
-    background:#39231a;
-    top:-8px;
-    left:6px;
-}
-
-.bowl{
-    width:38px;
-    height:20px;
-    border-radius:0 0 50% 50%;
-    background:#d9d1bd;
-}
-
-.plate{
-    width:42px;
-    height:8px;
-    border-radius:50%;
-    background:#eee7d7;
-}
-
-/* =========================================================
-   CONTENEDOR PRINCIPAL
-   ========================================================= */
-
-.page{
-    width:min(1100px,94%);
-    margin:auto;
-    padding:25px 0 60px;
-    position:relative;
-}
-
-/* =========================================================
-   HOJA CENTRAL
-   ========================================================= */
-
-.menu-paper{
-    width:72%;
-    margin:80px auto 0;
-    min-height:1500px;
-    background:
-        radial-gradient(rgba(100,80,50,.025) 1px,transparent 1px),
-        var(--papel);
-    background-size:7px 7px;
-    padding:45px 7% 80px;
-    position:relative;
-    box-shadow:var(--sombra);
-    clip-path:polygon(
-        1% 0%,
-        99% 1%,
-        100% 30%,
-        98% 65%,
-        99% 99%,
-        70% 100%,
-        35% 99%,
-        1% 100%,
-        0% 70%,
-        1% 35%
-    );
-}
-
-.menu-paper::after{
-    content:"";
-    position:absolute;
-    inset:0;
-    box-shadow:inset 0 0 50px rgba(80,50,20,.06);
-    pointer-events:none;
-}
-
-/* =========================================================
-   HEADER
-   ========================================================= */
-
-header{
-    text-align:center;
-    position:relative;
-    z-index:2;
-}
-
-.logo{
-    width:180px;
-    height:180px;
-    margin:0 auto 10px;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    color:var(--vino);
-}
-
-.fox{
-    font-size:75px;
-    line-height:1;
-    filter:sepia(.3);
-}
-
-.logo-kurama{
-    font-size:34px;
-    font-weight:bold;
-    letter-spacing:5px;
-}
-
-.logo-sushi{
-    font-size:17px;
-    color:var(--dorado);
-    letter-spacing:8px;
-    margin-top:2px;
-}
-
-.subtitle{
-    color:#765b42;
-    font-size:14px;
-    margin-bottom:25px;
+.logo span {
+    color: #d2ad67;
+    font-size: 18px;
+    letter-spacing: 7px;
 }
 
 /* =========================================================
    NAVEGACIÓN
    ========================================================= */
 
-.nav{
-    position:sticky;
-    top:0;
-    z-index:50;
-    display:flex;
-    justify-content:center;
-    flex-wrap:wrap;
-    gap:7px;
-    padding:10px;
-    background:rgba(255,250,240,.95);
-    backdrop-filter:blur(8px);
-    border-bottom:1px solid rgba(123,30,39,.15);
+.nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 10px;
+    background: rgba(54,29,21,.95);
+    box-shadow: 0 4px 12px rgba(0,0,0,.3);
 }
 
-.nav button{
-    border:none;
-    background:transparent;
-    color:var(--vino);
-    padding:9px 13px;
-    border-radius:20px;
-    cursor:pointer;
-    font-weight:bold;
-    transition:.2s;
+.nav button {
+    flex: 0 0 auto;
+    border: 1px solid #b89452;
+    background: transparent;
+    color: white;
+    border-radius: 30px;
+    padding: 10px 16px;
+    cursor: pointer;
+    font-weight: bold;
 }
 
-.nav button:hover{
-    background:var(--vino);
-    color:white;
+.nav button:hover {
+    background: #b89452;
+    color: #29150f;
 }
 
 /* =========================================================
-   CATEGORÍAS
+   HOJA CENTRAL
    ========================================================= */
 
-.category{
-    margin-top:55px;
-    scroll-margin-top:70px;
+.paper {
+    width: min(94%, 1100px);
+    margin: 20px auto 80px;
+    background:
+        radial-gradient(circle at 20% 20%, rgba(150,120,70,.04) 0 1px, transparent 2px),
+        radial-gradient(circle at 70% 80%, rgba(150,120,70,.03) 0 1px, transparent 2px),
+        var(--papel);
+    background-size: 12px 12px, 17px 17px, auto;
+    min-height: 900px;
+    padding: 35px 20px 80px;
+    box-shadow: 0 15px 35px var(--sombra);
+    border-radius: 4px;
+    position: relative;
 }
 
-.category-title{
-    text-align:center;
-    color:var(--vino);
-    font-size:28px;
-    margin-bottom:25px;
+.paper:before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border: 1px solid rgba(100,70,40,.1);
 }
 
-.category-title::after{
-    content:"";
-    display:block;
-    width:60px;
-    height:2px;
-    background:var(--dorado);
-    margin:9px auto;
+/* =========================================================
+   TÍTULOS
+   ========================================================= */
+
+.section {
+    scroll-margin-top: 80px;
+    margin-top: 55px;
+}
+
+.section:first-of-type {
+    margin-top: 15px;
+}
+
+.section-title {
+    text-align: center;
+    color: var(--vino);
+    font-size: clamp(28px, 6vw, 42px);
+    margin-bottom: 8px;
+}
+
+.section-subtitle {
+    text-align: center;
+    color: #80664d;
+    margin-bottom: 25px;
 }
 
 /* =========================================================
    PRODUCTOS
    ========================================================= */
 
-.products{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:18px;
+.products {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 18px;
 }
 
-.product{
-    background:rgba(255,255,255,.65);
-    border:1px solid rgba(123,30,39,.13);
-    border-radius:12px;
-    padding:17px;
-    box-shadow:0 5px 15px rgba(60,30,15,.08);
-    transition:.25s;
+.product {
+    background: rgba(255,255,255,.86);
+    border: 1px solid #dfd2bc;
+    border-radius: 15px;
+    padding: 18px;
+    box-shadow: 0 5px 15px rgba(70,40,20,.1);
+    transition: .2s;
 }
 
-.product:hover{
-    transform:translateY(-3px);
-    box-shadow:0 10px 25px rgba(60,30,15,.15);
+.product:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(70,40,20,.16);
 }
 
-.product-image{
-    height:140px;
-    border-radius:8px;
-    margin-bottom:12px;
-    background:
-        linear-gradient(135deg,#ead5ae,#c58a58);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:50px;
-    overflow:hidden;
+.product h3 {
+    color: var(--vino);
+    font-size: 21px;
+    margin-bottom: 7px;
 }
 
-.product-image img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
+.description {
+    font-size: 14px;
+    color: #66564c;
+    min-height: 40px;
+    line-height: 1.45;
 }
 
-.product h3{
-    color:var(--vino-oscuro);
-    margin-bottom:6px;
-}
-
-.description{
-    color:#705a4b;
-    font-size:13px;
-    line-height:1.5;
-    min-height:40px;
-}
-
-.price{
-    font-size:20px;
-    color:var(--vino);
-    font-weight:bold;
-    margin:10px 0;
-}
-
-.product-actions{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:8px;
-}
-
-.counter{
-    display:flex;
-    align-items:center;
-    border:1px solid #c8b69a;
-    border-radius:20px;
-    overflow:hidden;
-}
-
-.counter button{
-    border:none;
-    width:32px;
-    height:32px;
-    background:#eee2cf;
-    cursor:pointer;
-    font-size:18px;
-}
-
-.counter span{
-    width:30px;
-    text-align:center;
-}
-
-.add-btn,
-.whatsapp-btn,
-.checkout-btn{
-    border:none;
-    background:var(--vino);
-    color:white;
-    padding:10px 15px;
-    border-radius:20px;
-    cursor:pointer;
-    font-weight:bold;
-    transition:.2s;
-}
-
-.add-btn:hover,
-.whatsapp-btn:hover,
-.checkout-btn:hover{
-    background:var(--vino-oscuro);
-    transform:scale(1.02);
+.price {
+    font-size: 22px;
+    font-weight: bold;
+    color: #8d6325;
+    margin: 12px 0;
 }
 
 /* =========================================================
-   CONFIGURADOR
+   CONTADOR
    ========================================================= */
 
-.modal{
-    position:fixed;
-    inset:0;
-    background:rgba(20,10,7,.7);
-    display:none;
-    justify-content:center;
-    align-items:center;
-    z-index:200;
-    padding:15px;
+.quantity {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin: 10px 0;
 }
 
-.modal.active{
-    display:flex;
+.quantity button {
+    width: 38px;
+    height: 38px;
+    border: none;
+    border-radius: 50%;
+    background: var(--vino);
+    color: white;
+    font-size: 22px;
+    cursor: pointer;
 }
 
-.modal-box{
-    width:min(520px,100%);
-    max-height:90vh;
-    overflow:auto;
-    background:var(--papel);
-    border-radius:18px;
-    padding:25px;
-    box-shadow:0 20px 70px rgba(0,0,0,.45);
+.quantity span {
+    min-width: 25px;
+    text-align: center;
+    font-weight: bold;
 }
 
-.modal-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:20px;
+/* =========================================================
+   BOTONES
+   ========================================================= */
+
+.btn {
+    width: 100%;
+    padding: 12px 15px;
+    border: none;
+    border-radius: 10px;
+    background: var(--vino);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .2s;
 }
 
-.close{
-    border:none;
-    background:none;
-    font-size:28px;
-    cursor:pointer;
-    color:var(--vino);
+.btn:hover {
+    background: var(--vino-oscuro);
+    transform: scale(1.01);
 }
 
-.option-group{
-    margin:20px 0;
-}
-
-.option-group h4{
-    color:var(--vino);
-    margin-bottom:10px;
-}
-
-.option{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    background:#f5ead7;
-    margin:6px 0;
-    padding:9px;
-    border-radius:8px;
-}
-
-.option input{
-    accent-color:var(--vino);
-}
-
-.selection-info{
-    background:#ead9bf;
-    padding:10px;
-    border-radius:8px;
-    font-size:13px;
-    margin-bottom:10px;
-}
-
-.modal-total{
-    font-size:23px;
-    color:var(--vino);
-    font-weight:bold;
-    text-align:center;
-    margin:20px;
+.btn.gold {
+    background: var(--dorado);
+    color: #2c1a12;
 }
 
 /* =========================================================
    CARRITO
    ========================================================= */
 
-.cart-button{
-    position:fixed;
-    right:20px;
-    bottom:20px;
-    width:60px;
-    height:60px;
-    border-radius:50%;
-    border:none;
-    background:var(--vino);
-    color:white;
-    font-size:25px;
-    cursor:pointer;
-    z-index:100;
-    box-shadow:0 8px 25px rgba(0,0,0,.3);
+.cart-button {
+    position: fixed;
+    right: 18px;
+    bottom: 18px;
+    z-index: 100;
+    width: 62px;
+    height: 62px;
+    border-radius: 50%;
+    border: 3px solid white;
+    background: var(--vino);
+    color: white;
+    font-size: 26px;
+    cursor: pointer;
+    box-shadow: 0 5px 18px rgba(0,0,0,.35);
 }
 
-.cart-count{
-    position:absolute;
-    right:-3px;
-    top:-3px;
-    width:23px;
-    height:23px;
-    background:var(--dorado);
-    border-radius:50%;
-    font-size:12px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:#2b1814;
-    font-weight:bold;
+.cart-count {
+    position: absolute;
+    right: -3px;
+    top: -5px;
+    background: var(--dorado);
+    color: #24140e;
+    font-size: 13px;
+    min-width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
 }
 
-.cart{
-    position:fixed;
-    right:-450px;
-    top:0;
-    height:100%;
-    width:min(420px,95%);
-    background:var(--papel);
-    z-index:150;
-    box-shadow:-10px 0 40px rgba(0,0,0,.3);
-    transition:.3s;
-    padding:22px;
-    overflow:auto;
+.cart-panel {
+    position: fixed;
+    top: 0;
+    right: -430px;
+    width: min(430px, 100%);
+    height: 100vh;
+    background: var(--crema);
+    z-index: 200;
+    box-shadow: -5px 0 25px rgba(0,0,0,.3);
+    transition: .3s;
+    display: flex;
+    flex-direction: column;
 }
 
-.cart.open{
-    right:0;
+.cart-panel.open {
+    right: 0;
 }
 
-.cart-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    border-bottom:1px solid #d7c6a9;
-    padding-bottom:15px;
+.cart-header {
+    background: var(--vino);
+    color: white;
+    padding: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.cart-item{
-    padding:15px 0;
-    border-bottom:1px solid #dfd1ba;
+.cart-header button {
+    background: none;
+    color: white;
+    border: none;
+    font-size: 25px;
+    cursor: pointer;
 }
 
-.cart-item-title{
-    font-weight:bold;
-    color:var(--vino);
+.cart-items {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px;
 }
 
-.cart-details{
-    font-size:12px;
-    color:#725c4d;
-    margin:5px 0;
-    line-height:1.5;
+.cart-item {
+    background: white;
+    border-radius: 10px;
+    padding: 13px;
+    margin-bottom: 12px;
+    border: 1px solid #ddd0bc;
 }
 
-.cart-controls{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+.cart-item h4 {
+    color: var(--vino);
+    margin-bottom: 5px;
 }
 
-.cart-controls button{
-    border:none;
-    background:#eadbc4;
-    border-radius:5px;
-    width:27px;
-    height:27px;
-    cursor:pointer;
+.cart-item small {
+    display: block;
+    color: #66564c;
+    line-height: 1.5;
 }
 
-.remove{
-    color:#a22;
-    background:none!important;
+.cart-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 9px;
 }
 
-.cart-total{
-    padding:20px 0;
-    font-size:21px;
-    font-weight:bold;
-    color:var(--vino);
+.cart-actions button {
+    border: none;
+    background: var(--vino);
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
 }
 
-/* =========================================================
-   CHECKOUT
-   ========================================================= */
-
-.checkout{
-    margin-top:60px;
-    padding:25px;
-    background:rgba(255,255,255,.5);
-    border-radius:15px;
+.cart-footer {
+    padding: 18px;
+    border-top: 1px solid #d4c5ae;
+    background: #fffaf0;
 }
 
-.checkout h2{
-    color:var(--vino);
-    text-align:center;
-    margin-bottom:20px;
-}
-
-.form-group{
-    margin:15px 0;
-}
-
-.form-group label{
-    display:block;
-    font-weight:bold;
-    margin-bottom:6px;
-}
-
-select{
-    width:100%;
-    padding:11px;
-    border:1px solid #cdbb9f;
-    border-radius:8px;
-    background:#fffaf0;
-    color:var(--texto);
-}
-
-.radio-group{
-    display:flex;
-    flex-direction:column;
-    gap:8px;
-}
-
-.payment-message{
-    display:none;
-    background:#f0dfc3;
-    padding:15px;
-    border-radius:8px;
-    font-size:13px;
-    line-height:1.5;
-}
-
-.order-summary{
-    margin-top:20px;
-    border-top:1px solid #d4c3a7;
-    padding-top:15px;
-}
-
-.final-total{
-    font-size:25px;
-    font-weight:bold;
-    color:var(--vino);
-    text-align:right;
-    margin:15px 0;
+.total {
+    font-size: 25px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 12px;
+    color: var(--vino);
 }
 
 /* =========================================================
-   RESEÑAS
+   MODAL CONFIGURADOR
    ========================================================= */
 
-.reviews{
-    margin-top:60px;
-    text-align:center;
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 300;
+    background: rgba(0,0,0,.68);
+    padding: 15px;
+    overflow-y: auto;
 }
 
-.review-box{
-    width:min(500px,90%);
-    margin:20px auto;
-    min-height:60px;
-    position:relative;
+.modal.open {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.review{
-    background:#e9f5e5;
-    border-radius:15px 15px 5px 15px;
-    padding:14px 18px;
-    display:inline-block;
-    box-shadow:0 4px 15px rgba(0,0,0,.08);
-    animation:messageIn 5s ease-in-out infinite;
+.modal-box {
+    width: min(600px, 100%);
+    max-height: 94vh;
+    overflow-y: auto;
+    background: var(--papel);
+    border-radius: 18px;
+    padding: 22px;
+    box-shadow: 0 15px 50px rgba(0,0,0,.45);
 }
 
-@keyframes messageIn{
-    0%{opacity:0;transform:translateY(10px);}
-    15%{opacity:1;transform:translateY(0);}
-    75%{opacity:1;transform:translateY(0);}
-    100%{opacity:0;transform:translateY(-10px);}
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.modal-header h2 {
+    color: var(--vino);
+}
+
+.close {
+    border: none;
+    background: transparent;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.config-group {
+    margin-bottom: 20px;
+}
+
+.config-group h3 {
+    color: var(--vino);
+    margin-bottom: 10px;
+}
+
+.option-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+}
+
+.option {
+    border: 1px solid #d3c2a8;
+    background: white;
+    border-radius: 9px;
+    padding: 11px;
+    cursor: pointer;
+}
+
+.option.selected {
+    background: #f2dfbd;
+    border: 2px solid var(--vino);
+}
+
+.option input {
+    display: none;
+}
+
+.selection-note {
+    background: #f4ead8;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    font-size: 14px;
 }
 
 /* =========================================================
-   FOOTER
+   OVERLAY
    ========================================================= */
 
-footer{
-    margin-top:50px;
-    text-align:center;
-    padding:30px 10px 10px;
-    border-top:1px solid #d5c5aa;
-    color:#705849;
+.overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 150;
+    background: rgba(0,0,0,.35);
 }
 
-.socials{
-    display:flex;
-    justify-content:center;
-    gap:15px;
-    margin:15px;
-}
-
-.social{
-    text-decoration:none;
-    color:white;
-    background:var(--vino);
-    width:45px;
-    height:45px;
-    border-radius:50%;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-weight:bold;
-}
-
-.transfer{
-    display:none;
+.overlay.show {
+    display: block;
 }
 
 /* =========================================================
    RESPONSIVE
    ========================================================= */
 
-@media(max-width:700px){
+@media(max-width:600px) {
 
-    .page{
-        width:100%;
+    .paper {
+        width: 96%;
+        padding: 25px 13px 70px;
     }
 
-    .menu-paper{
-        width:94%;
-        margin-top:50px;
-        padding:35px 6% 60px;
-        min-height:0;
-        clip-path:none;
-        border-radius:4px;
+    .products {
+        grid-template-columns: 1fr;
     }
 
-    .left-wall,
-    .right-shelf{
-        opacity:.4;
+    .option-grid {
+        grid-template-columns: 1fr;
     }
 
-    .products{
-        grid-template-columns:1fr;
-    }
-
-    .product-image{
-        height:170px;
-    }
-
-    .nav{
-        overflow-x:auto;
-        justify-content:flex-start;
-        flex-wrap:nowrap;
-    }
-
-    .nav button{
-        white-space:nowrap;
-    }
-
-    .logo{
-        width:150px;
-        height:150px;
-    }
-
-    .fox{
-        font-size:60px;
-    }
-
-    .logo-kurama{
-        font-size:27px;
-    }
-
-    .category-title{
-        font-size:25px;
+    .logo-icon {
+        font-size: 50px;
     }
 }
 </style>
@@ -889,118 +523,102 @@ footer{
 
 <body>
 
-<div class="restaurant-bg">
-    <div class="ceiling"></div>
-
-    <div class="lamp one"></div>
-    <div class="lamp two"></div>
-    <div class="lamp three"></div>
-    <div class="lamp four"></div>
-    <div class="lamp five"></div>
-    <div class="lamp six"></div>
-
-    <div class="left-wall"></div>
-
-    <div class="right-shelf">
-        <div class="shelf-row">
-            <span class="bottle"></span>
-            <span class="bottle"></span>
-            <span class="bowl"></span>
-        </div>
-
-        <div class="shelf-row">
-            <span class="plate"></span>
-            <span class="bowl"></span>
-            <span class="bottle"></span>
-        </div>
-
-        <div class="shelf-row">
-            <span class="bottle"></span>
-            <span class="plate"></span>
-            <span class="bowl"></span>
-        </div>
-
-        <div class="shelf-row">
-            <span class="plate"></span>
-            <span class="plate"></span>
-            <span class="bowl"></span>
-        </div>
-    </div>
-</div>
-
-<main class="page">
-
-<div class="menu-paper">
-
 <header>
-
     <div class="logo">
-        <div class="fox">🦊</div>
-        <div class="logo-kurama">KURAMA</div>
-        <div class="logo-sushi">SUSHI</div>
+        <div class="logo-icon">🦊</div>
+        <h1>KURAMA</h1>
+        <span>SUSHI</span>
     </div>
-
-    <div class="subtitle">
-        Sushi artesanal hecho con cariño 🍣
-    </div>
-
 </header>
 
 <nav class="nav">
-
     <button onclick="goTo('sushi')">🍣 Sushi</button>
     <button onclick="goTo('cortes')">🥢 Cortes</button>
-    <button onclick="goTo('arma')">🍱 Arma tu pedido</button>
+    <button onclick="goTo('arma')">🍙 Arma tu pedido</button>
     <button onclick="goTo('box')">📦 Box</button>
     <button onclick="goTo('agregar')">➕ Agregar</button>
-
 </nav>
 
+<main class="paper">
 
 <!-- =====================================================
      SUSHI
      ===================================================== -->
 
-<section class="category" id="sushi">
+<section id="sushi" class="section">
 
-<h2 class="category-title">🍣 Sushi</h2>
+    <h2 class="section-title">🍣 Sushi</h2>
 
-<div class="products">
+    <p class="section-subtitle">
+        Sushi mixto a elección del chef.
+        Tú eliges la cantidad, el chef se encarga de la combinación.
+    </p>
 
-<script>
-const sushiProducts = [
-    ["Sushi mixto - 30 piezas","$13.500",13500,"30 piezas mixtas a elección del chef.","🍣"],
-    ["Sushi mixto - 40 piezas","$17.500",17500,"40 piezas mixtas a elección del chef.","🍣"],
-    ["Sushi mixto - 50 piezas","$22.500",22500,"50 piezas mixtas a elección del chef.","🍣"],
-    ["Sushi mixto - 60 piezas","$27.500",27500,"60 piezas mixtas a elección del chef.","🍣"]
-];
+    <div class="products">
 
-document.write(
-sushiProducts.map((p,i)=>`
-<div class="product">
-    <div class="product-image">${p[4]}</div>
-    <h3>${p[0]}</h3>
-    <p class="description">${p[3]}</p>
-    <div class="price">${p[1]}</div>
+        <article class="product">
+            <h3>30 piezas mixtas</h3>
+            <p class="description">
+                Sushi mixto a elección del chef.
+            </p>
+            <div class="price">$13.500</div>
+            <div class="quantity">
+                <button onclick="changeQty('sushi30',-1)">−</button>
+                <span id="qty-sushi30">1</span>
+                <button onclick="changeQty('sushi30',1)">+</button>
+            </div>
+            <button class="btn"
+                onclick="addFixed('Sushi mixto 30 piezas',13500,'sushi30')">
+                Agregar al carrito
+            </button>
+        </article>
 
-    <div class="product-actions">
-        <div class="counter">
-            <button onclick="changeQuick(${i},-1)">−</button>
-            <span id="sushiQty${i}">1</span>
-            <button onclick="changeQuick(${i},1)">+</button>
-        </div>
+        <article class="product">
+            <h3>40 piezas mixtas</h3>
+            <p class="description">Sushi mixto a elección del chef.</p>
+            <div class="price">$17.500</div>
+            <div class="quantity">
+                <button onclick="changeQty('sushi40',-1)">−</button>
+                <span id="qty-sushi40">1</span>
+                <button onclick="changeQty('sushi40',1)">+</button>
+            </div>
+            <button class="btn"
+                onclick="addFixed('Sushi mixto 40 piezas',17500,'sushi40')">
+                Agregar al carrito
+            </button>
+        </article>
 
-        <button class="add-btn"
-            onclick="addSushi(${i})">
-            Agregar
-        </button>
+        <article class="product">
+            <h3>50 piezas mixtas</h3>
+            <p class="description">Sushi mixto a elección del chef.</p>
+            <div class="price">$22.500</div>
+            <div class="quantity">
+                <button onclick="changeQty('sushi50',-1)">−</button>
+                <span id="qty-sushi50">1</span>
+                <button onclick="changeQty('sushi50',1)">+</button>
+            </div>
+            <button class="btn"
+                onclick="addFixed('Sushi mixto 50 piezas',22500,'sushi50')">
+                Agregar al carrito
+            </button>
+        </article>
+
+        <article class="product">
+            <h3>60 piezas mixtas</h3>
+            <p class="description">Sushi mixto a elección del chef.</p>
+            <div class="price">$27.500</div>
+            <div class="quantity">
+                <button onclick="changeQty('sushi60',-1)">−</button>
+                <span id="qty-sushi60">1</span>
+                <button onclick="changeQty('sushi60',1)">+</button>
+            </div>
+            <button class="btn"
+                onclick="addFixed('Sushi mixto 60 piezas',27500,'sushi60')">
+                Agregar al carrito
+            </button>
+        </article>
+
     </div>
-</div>
-`).join("")
-);
-</script>
-
-</div>
 </section>
 
 
@@ -1008,11 +626,30 @@ sushiProducts.map((p,i)=>`
      CORTES
      ===================================================== -->
 
-<section class="category" id="cortes">
+<section id="cortes" class="section">
 
-<h2 class="category-title">🥢 Cortes</h2>
+<h2 class="section-title">🥢 Cortes</h2>
 
-<div class="products" id="cortesProducts"></div>
+<p class="section-subtitle">
+    Todos incluyen 1 proteína + 2 secundarios.
+</p>
+
+<div class="products">
+
+    <script>
+    const cortes = [
+        ["Panko",5000],
+        ["Tempura",5000],
+        ["Queso",5500],
+        ["Palta",5500],
+        ["Nori",4500],
+        ["Sésamo",4500]
+    ];
+    </script>
+
+</div>
+
+<div id="cortes-container" class="products"></div>
 
 </section>
 
@@ -1021,11 +658,15 @@ sushiProducts.map((p,i)=>`
      ARMA TU PEDIDO
      ===================================================== -->
 
-<section class="category" id="arma">
+<section id="arma" class="section">
 
-<h2 class="category-title">🍱 Arma tu pedido</h2>
+<h2 class="section-title">🍙 Arma tu pedido</h2>
 
-<div class="products" id="armaProducts"></div>
+<p class="section-subtitle">
+    Personaliza tu pedido eligiendo exactamente los ingredientes permitidos.
+</p>
+
+<div id="arma-container" class="products"></div>
 
 </section>
 
@@ -1034,15 +675,251 @@ sushiProducts.map((p,i)=>`
      BOX
      ===================================================== -->
 
-<section class="category" id="box">
+<section id="box" class="section">
 
-<h2 class="category-title">📦 Box</h2>
+<h2 class="section-title">📦 Box</h2>
 
-<div class="products" id="boxProducts"></div>
+<div class="products">
 
+    <article class="product">
+        <h3>Box normal</h3>
+        <p class="description">
+            2 rolls acevichados + 6 aros de cebolla +
+            6 arrollados primavera.
+        </p>
+        <div class="price">$21.000</div>
+        <button class="btn" onclick="openBoxNormal()">
+            Personalizar Box
+        </button>
+    </article>
+
+    <article class="product">
+        <h3>Box</h3>
+        <p class="description">
+            3 handroll de pollo, palta y queso +
+            6 arrollados primavera.
+        </p>
+        <div class="price">$14.000</div>
+        <button class="btn"
+            onclick="addFixed('Box 3 handroll pollo, palta y queso + 6 arrollados',14000,'box')">
+            Agregar al carrito
+        </button>
+    </article>
+
+    <article class="product">
+        <h3>Box Premium</h3>
+        <p class="description">
+            40 piezas de sushi + 6 empanadas de queso +
+            6 arrollados primavera + 6 aros de cebolla +
+            5 piezas de pollo apanado.
+        </p>
+        <div class="price">$32.000</div>
+        <button class="btn"
+            onclick="addFixed('Box Premium',32000,'premium')">
+            Agregar al carrito
+        </button>
+    </article>
+
+</div>
 </section>
 
 
 <!-- =====================================================
      AGREGAR
-     =====================
+     ===================================================== -->
+
+<section id="agregar" class="section">
+
+<h2 class="section-title">➕ Agregar</h2>
+
+<div class="products">
+
+    <article class="product">
+        <h3>6 aros de cebolla</h3>
+        <div class="price">$3.000</div>
+
+        <div class="quantity">
+            <button onclick="changeQty('aros',-1)">−</button>
+            <span id="qty-aros">1</span>
+            <button onclick="changeQty('aros',1)">+</button>
+        </div>
+
+        <button class="btn"
+            onclick="addFixed('6 aros de cebolla',3000,'aros')">
+            Agregar
+        </button>
+    </article>
+
+    <article class="product">
+        <h3>6 arrollados primavera</h3>
+        <div class="price">$3.000</div>
+
+        <div class="quantity">
+            <button onclick="changeQty('arrollados',-1)">−</button>
+            <span id="qty-arrollados">1</span>
+            <button onclick="changeQty('arrollados',1)">+</button>
+        </div>
+
+        <button class="btn"
+            onclick="addFixed('6 arrollados primavera',3000,'arrollados')">
+            Agregar
+        </button>
+    </article>
+
+    <article class="product">
+        <h3>6 empanadas de queso</h3>
+        <div class="price">$3.000</div>
+
+        <div class="quantity">
+            <button onclick="changeQty('empanadas',-1)">−</button>
+            <span id="qty-empanadas">1</span>
+            <button onclick="changeQty('empanadas',1)">+</button>
+        </div>
+
+        <button class="btn"
+            onclick="addFixed('6 empanadas de queso',3000,'empanadas')">
+            Agregar
+        </button>
+    </article>
+
+</div>
+</section>
+
+</main>
+
+
+<!-- =====================================================
+     BOTÓN CARRITO
+     ===================================================== -->
+
+<button class="cart-button" onclick="toggleCart()">
+    🛒
+    <span class="cart-count" id="cart-count">0</span>
+</button>
+
+<div class="overlay" id="overlay" onclick="toggleCart()"></div>
+
+<!-- =====================================================
+     CARRITO
+     ===================================================== -->
+
+<aside class="cart-panel" id="cart">
+
+    <div class="cart-header">
+        <h2>Tu pedido</h2>
+        <button onclick="toggleCart()">×</button>
+    </div>
+
+    <div class="cart-items" id="cart-items">
+        <p style="text-align:center;margin-top:30px;">
+            Tu carrito está vacío 🍣
+        </p>
+    </div>
+
+    <div class="cart-footer">
+
+        <div class="total">
+            Total: $<span id="cart-total">0</span>
+        </div>
+
+        <button class="btn" onclick="sendWhatsApp()">
+            📲 Pedir por WhatsApp
+        </button>
+
+        <br><br>
+
+        <button class="btn gold" onclick="clearCart()">
+            Vaciar carrito
+        </button>
+
+    </div>
+
+</aside>
+
+
+<!-- =====================================================
+     MODAL CONFIGURADOR
+     ===================================================== -->
+
+<div class="modal" id="modal">
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+            <h2 id="modal-title">Personalizar</h2>
+            <button class="close" onclick="closeModal()">×</button>
+        </div>
+
+        <div id="modal-content"></div>
+
+        <button class="btn" onclick="confirmConfiguration()">
+            Agregar al carrito
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   DATOS
+   ========================================================= */
+
+const proteins = [
+    "Pollo apanado",
+    "Camarón"
+];
+
+const sides = [
+    "Queso",
+    "Palta",
+    "Morrón",
+    "Cebollín",
+    "Champiñón"
+];
+
+const wrappers = [
+    "Palta",
+    "Queso",
+    "Nori",
+    "Sésamo",
+    "Panko",
+    "Tempura"
+];
+
+const restrictedWrappers = [
+    "Panko",
+    "Tempura"
+];
+
+let cart = [];
+
+let quantities = {
+    sushi30:1,
+    sushi40:1,
+    sushi50:1,
+    sushi60:1,
+    aros:1,
+    arrollados:1,
+    empanadas:1
+};
+
+let currentConfig = null;
+
+
+/* =========================================================
+   NAVEGACIÓN
+   ========================================================= */
+
+function goTo(id) {
+    document.getElementById(id).scrollIntoView({
+        behavior:"smooth",
+        block:"start"
+    });
+}
+
+
+/* =========================================================
+   CANTIDA
