@@ -1,574 +1,444 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kurama Sushi | Menú & Pedidos</title>
-    <!-- Google Fonts & FontAwesome -->
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <style>
-        :root {
-            --bg-dark: #0b0914;
-            --card-bg: rgba(23, 19, 38, 0.85);
-            --accent-pink: #ff007f;
-            --accent-purple: #7b2cbf;
-            --accent-cyan: #00f5d4;
-            --accent-yellow: #ffee32;
-            --text-main: #f8f9fa;
-            --text-sub: #b0a8b9;
-            --gradient-primary: linear-gradient(135deg, #ff007f 0%, #7b2cbf 100%);
-            --gradient-neon: linear-gradient(90deg, #ff007f, #00f5d4);
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kurama Sushi 🍣 | Pedidos Online</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'neon-pink': '#ff007f',
+            'neon-purple': '#7b2cbf',
+            'neon-cyan': '#00f5d4',
+            'neon-yellow': '#ffee32',
+            'dark-bg-start': '#0b0914',
+            'dark-bg-end': '#18132b',
+            'card-bg': 'rgba(23, 19, 38, 0.85)',
+          },
+          fontFamily: {
+            sans: ['Outfit', 'Poppins', 'sans-serif'],
+          }
         }
+      }
+    }
+  </script>
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Outfit', sans-serif;
-        }
+  <style>
+    body {
+      background: radial-gradient(circle at top center, #18132b 0%, #0b0914 100%);
+      background-attachment: fixed;
+      color: #f8f9fa;
+      font-family: 'Outfit', sans-serif;
+    }
 
-        body {
-            background-color: var(--bg-dark);
-            background-image: 
-                radial-gradient(at 0% 0%, rgba(123, 44, 191, 0.25) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(255, 0, 127, 0.2) 0px, transparent 50%);
-            background-attachment: fixed;
-            color: var(--text-main);
-            padding-bottom: 110px;
-        }
+    .glass-card {
+      background: rgba(23, 19, 38, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 0, 127, 0.2);
+    }
 
-        /* HEADER & HERO */
-        header {
-            text-align: center;
-            padding: 45px 20px 25px;
-            position: relative;
-        }
+    .glass-card:hover {
+      border-color: rgba(255, 0, 127, 0.6);
+      box-shadow: 0 10px 25px rgba(255, 0, 127, 0.25);
+    }
 
-        .badge-logo {
-            display: inline-block;
-            background: var(--gradient-primary);
-            padding: 6px 16px;
-            border-radius: 30px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            box-shadow: 0 0 15px rgba(255, 0, 127, 0.5);
-            margin-bottom: 12px;
-        }
+    .glass-nav {
+      background: rgba(11, 9, 20, 0.85);
+      backdrop-filter: blur(15px);
+    }
 
-        header h1 {
-            font-size: 2.8rem;
-            font-weight: 800;
-            background: var(--gradient-neon);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 6px;
-        }
+    .text-gradient {
+      background: linear-gradient(135deg, #ff007f 0%, #00f5d4 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
 
-        header p {
-            color: var(--text-sub);
-            font-size: 1rem;
-        }
-
-        /* INFO BAR */
-        .info-bar {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            padding: 10px 15px;
-            flex-wrap: wrap;
-            max-width: 900px;
-            margin: 0 auto 20px;
-        }
-
-        .info-chip {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(8px);
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--accent-cyan);
-        }
-
-        /* CATEGORIES FILTER */
-        .categories {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            padding: 15px 20px;
-            flex-wrap: wrap;
-            position: sticky;
-            top: 0;
-            background-color: rgba(11, 9, 20, 0.9);
-            backdrop-filter: blur(12px);
-            z-index: 100;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .cat-btn {
-            background: rgba(255, 255, 255, 0.05);
-            color: var(--text-sub);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 10px 22px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
-        }
-
-        .cat-btn.active, .cat-btn:hover {
-            background: var(--gradient-primary);
-            color: #fff;
-            border-color: transparent;
-            box-shadow: 0 0 15px rgba(255, 0, 127, 0.4);
-        }
-
-        /* CONTAINER & GRID */
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 22px;
-        }
-
-        /* CARD STYLE */
-        .card {
-            background: var(--card-bg);
-            border-radius: 18px;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(10px);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-6px);
-            border-color: rgba(255, 0, 127, 0.4);
-            box-shadow: 0 10px 25px rgba(255, 0, 127, 0.25);
-        }
-
-        .card-img-wrap {
-            position: relative;
-            width: 100%;
-            height: 180px;
-            overflow: hidden;
-        }
-
-        .card-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.4s ease;
-        }
-
-        .card:hover .card-img {
-            transform: scale(1.08);
-        }
-
-        .card-body {
-            padding: 18px;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .card-title {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 6px;
-            color: #fff;
-        }
-
-        .card-desc {
-            font-size: 0.88rem;
-            color: var(--text-sub);
-            margin-bottom: 16px;
-            flex-grow: 1;
-            line-height: 1.4;
-        }
-
-        .card-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .card-price {
-            font-size: 1.3rem;
-            font-weight: 800;
-            color: var(--accent-cyan);
-        }
-
-        .add-btn {
-            background: var(--gradient-primary);
-            color: #fff;
-            border: none;
-            padding: 10px 18px;
-            border-radius: 12px;
-            cursor: pointer;
-            font-weight: 700;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            box-shadow: 0 4px 12px rgba(255, 0, 127, 0.3);
-        }
-
-        .add-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 18px rgba(255, 0, 127, 0.5);
-        }
-
-        /* CART BAR FLOTANTE */
-        .cart-bar {
-            position: fixed;
-            bottom: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 92%;
-            max-width: 600px;
-            background: rgba(18, 14, 33, 0.95);
-            border: 1px solid rgba(255, 0, 127, 0.4);
-            backdrop-filter: blur(15px);
-            padding: 12px 20px;
-            border-radius: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 0, 127, 0.2);
-            z-index: 1000;
-        }
-
-        .cart-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .cart-badge {
-            background: var(--accent-pink);
-            color: #fff;
-            padding: 6px 12px;
-            border-radius: 15px;
-            font-weight: 800;
-            font-size: 0.9rem;
-        }
-
-        .cart-total {
-            font-size: 1.25rem;
-            font-weight: 800;
-            color: #fff;
-        }
-
-        .checkout-btn {
-            background: #25d366;
-            color: #fff;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 14px;
-            font-weight: 700;
-            font-size: 0.95rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
-            transition: all 0.2s ease;
-        }
-
-        .checkout-btn:hover {
-            transform: scale(1.03);
-            background: #20ba5a;
-        }
-
-        /* MODAL */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(5, 3, 10, 0.85);
-            backdrop-filter: blur(10px);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .modal.active { display: flex; }
-
-        .modal-content {
-            background: var(--bg-dark);
-            border: 1px solid rgba(255, 0, 127, 0.3);
-            width: 100%;
-            max-width: 480px;
-            border-radius: 20px;
-            padding: 22px;
-            max-height: 85vh;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.9);
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding-bottom: 12px;
-            margin-bottom: 15px;
-        }
-
-        .modal-header h3 { font-size: 1.3rem; color: #fff; }
-
-        .close-btn {
-            background: none;
-            border: none;
-            color: var(--text-sub);
-            font-size: 1.6rem;
-            cursor: pointer;
-        }
-
-        .modal-body {
-            overflow-y: auto;
-            flex-grow: 1;
-            margin-bottom: 15px;
-        }
-
-        .cart-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .qty-btn {
-            background: rgba(255, 255, 255, 0.1);
-            color: #fff;
-            border: none;
-            width: 28px;
-            height: 28px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 700;
-        }
-
-        .inputs-group input, .inputs-group select {
-            width: 100%;
-            padding: 12px;
-            margin-top: 10px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: #fff;
-            border-radius: 10px;
-            outline: none;
-        }
-
-        .inputs-group input:focus, .inputs-group select:focus {
-            border-color: var(--accent-pink);
-        }
-    </style>
+    /* Hide scrollbar for category selector */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
 </head>
-<body>
+<body class="min-h-screen pb-32">
 
-    <header>
-        <div class="badge-logo">KURAMA SUSHI</div>
-        <h1>Haz tu Pedido Online 🍣</h1>
-        <p>Elige tus rolls favoritos y te los preparamos al instante</p>
-    </header>
-
-    <div class="info-bar">
-        <div class="info-chip"><i class="fa-solid fa-clock"></i> 17:00 - 23:00 hrs</div>
-        <div class="info-chip"><i class="fa-solid fa-motorcycle"></i> Delivery y Retiro</div>
-        <div class="info-chip"><i class="fa-brands fa-whatsapp"></i> +56 9 3357 0798</div>
+  <!-- HEADER / HERO SECTION -->
+  <header class="text-center pt-8 pb-6 px-4 max-w-4xl mx-auto">
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-neon-pink/40 bg-neon-pink/10 text-neon-pink text-xs font-bold tracking-widest uppercase mb-4 shadow-[0_0_15px_rgba(255,0,127,0.3)]">
+      <i data-lucide="zap" class="w-4 h-4"></i> KURAMA SUSHI
     </div>
+    
+    <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-2">
+      Haz tu Pedido <span class="text-gradient">Online</span> 🍣
+    </h1>
+    <p class="text-slate-400 text-sm md:text-base max-w-md mx-auto">
+      Elige tus rolls favoritos y te los preparamos al instante.
+    </p>
 
-    <div class="categories">
-        <button class="cat-btn active" onclick="filterCategory('todos')">Todos</button>
-        <button class="cat-btn" onclick="filterCategory('promos')">Promociones</button>
-        <button class="cat-btn" onclick="filterCategory('rolls')">Rolls Especiales</button>
-        <button class="cat-btn" onclick="filterCategory('california')">California</button>
+    <!-- INFO BAR -->
+    <div class="flex flex-wrap justify-center gap-3 mt-6 text-xs md:text-sm">
+      <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-900/80 border border-slate-800 text-slate-300">
+        <i data-lucide="clock" class="w-4 h-4 text-neon-cyan"></i> 17:00 - 23:00 hrs
+      </div>
+      <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-900/80 border border-slate-800 text-slate-300">
+        <i data-lucide="bike" class="w-4 h-4 text-neon-pink"></i> Delivery & Retiro
+      </div>
+      <a href="https://wa.me/56933570798" target="_blank" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-900/80 border border-slate-800 text-slate-300 hover:border-green-500 transition-colors">
+        <i data-lucide="phone" class="w-4 h-4 text-green-400"></i> +56 9 3357 0798
+      </a>
     </div>
+  </header>
 
-    <div class="container">
-        <div class="products-grid" id="products-container"></div>
+  <!-- CATEGORIES FILTER BAR -->
+  <nav class="sticky top-0 z-30 glass-nav border-b border-slate-800/80 py-3 mb-8">
+    <div class="max-w-4xl mx-auto px-4 flex gap-2 overflow-x-auto no-scrollbar" id="category-filters">
+      <!-- Generated dynamically -->
     </div>
+  </nav>
 
-    <div class="cart-bar">
-        <div class="cart-info">
-            <span class="cart-badge" id="cart-count">0</span>
-            <span class="cart-total" id="cart-total">$0</span>
+  <!-- MAIN CATALOG -->
+  <main class="max-w-5xl mx-auto px-4">
+    <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Generated dynamically -->
+    </div>
+  </main>
+
+  <!-- FLOATING CART BAR -->
+  <div class="fixed bottom-4 left-0 right-0 z-40 px-4 pointer-events-none">
+    <div class="max-w-md mx-auto bg-slate-900/90 border border-neon-pink/50 rounded-2xl p-3 shadow-[0_10px_30px_rgba(0,0,0,0.8)] backdrop-blur-xl pointer-events-auto flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="relative bg-neon-pink/20 p-2.5 rounded-xl border border-neon-pink/30">
+          <i data-lucide="shopping-bag" class="w-6 h-6 text-neon-pink"></i>
+          <span id="cart-count" class="absolute -top-2 -right-2 bg-neon-pink text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-slate-900">0</span>
         </div>
-        <button class="checkout-btn" onclick="openModal()">
-            <i class="fa-brands fa-whatsapp"></i> Ver Pedido
-        </button>
+        <div>
+          <p class="text-xs text-slate-400 font-medium">Total Pedido</p>
+          <p id="cart-total" class="text-lg font-bold text-neon-cyan">$0</p>
+        </div>
+      </div>
+      
+      <button onclick="openModal()" class="bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-400 hover:to-green-500 text-white font-bold px-5 py-2.5 rounded-xl flex items-center gap-2 transition-all active:scale-95 shadow-[0_0_15px_rgba(37,211,102,0.4)]">
+        <span>Ver Pedido</span>
+        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+      </button>
     </div>
+  </div>
 
-    <div class="modal" id="cart-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Tu Pedido</h3>
-                <button class="close-btn" onclick="closeModal()">&times;</button>
+  <!-- CHECKOUT MODAL -->
+  <div id="checkout-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-800 w-full max-w-lg rounded-2xl overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
+      
+      <!-- Modal Header -->
+      <div class="p-4 border-b border-slate-800 flex items-center justify-between bg-slate-950/50">
+        <h3 class="text-lg font-bold flex items-center gap-2">
+          <i data-lucide="shopping-cart" class="w-5 h-5 text-neon-pink"></i> Tu Pedido
+        </h3>
+        <button onclick="closeModal()" class="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800 transition-colors">
+          <i data-lucide="x" class="w-6 h-6"></i>
+        </button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="p-4 overflow-y-auto space-y-6 flex-1">
+        <!-- Cart Items List -->
+        <div>
+          <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Detalle de Productos</h4>
+          <div id="cart-items" class="space-y-3">
+            <!-- Items added dynamically -->
+          </div>
+        </div>
+
+        <!-- Form Details -->
+        <div class="space-y-4 pt-4 border-t border-slate-800">
+          <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Datos de Entrega</h4>
+          
+          <div>
+            <label class="block text-xs font-medium text-slate-300 mb-1">Nombre Completo *</label>
+            <input type="text" id="client-name" placeholder="Ej: Juan Pérez" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-neon-pink">
+          </div>
+
+          <div>
+            <label class="block text-xs font-medium text-slate-300 mb-1">Tipo de Entrega</label>
+            <select id="delivery-type" onchange="toggleAddressField()" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-neon-pink">
+              <option value="Delivery">Reparto a Domicilio (Delivery)</option>
+              <option value="Retiro">Retiro en Local</option>
+            </select>
+          </div>
+
+          <div id="address-container">
+            <label class="block text-xs font-medium text-slate-300 mb-1">Dirección Exacta *</label>
+            <input type="text" id="client-address" placeholder="Calle, Número, Depto / Villa" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-neon-pink">
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="p-4 border-t border-slate-800 bg-slate-950/50 space-y-3">
+        <div class="flex justify-between items-center text-slate-300 text-sm">
+          <span>Total a pagar:</span>
+          <span id="modal-total" class="text-xl font-extrabold text-neon-cyan">$0</span>
+        </div>
+
+        <button onclick="sendOrderToWhatsApp()" class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(37,211,102,0.3)] transition-all active:scale-[0.99]">
+          <i data-lucide="message-circle" class="w-5 h-5 fill-current"></i> Enviar Pedido a WhatsApp
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // DATA BASE
+    const products = [
+      {
+        id: 1,
+        name: "Roll Acevichado",
+        category: "rolls",
+        price: 7500,
+        desc: "Camarón furai, palta, queso crema, cubierto de pescado del día en salsa acevichada.",
+        img: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=500&q=80"
+      },
+      {
+        id: 2,
+        name: "California Ebi",
+        category: "california",
+        price: 6000,
+        desc: "Camarón, palta y queso crema, envuelto en sésamo o ciboulette.",
+        img: "https://images.unsplash.com/photo-1611143669185-af224c5e3252?auto=format&fit=crop&w=500&q=80"
+      },
+      {
+        id: 3,
+        name: "Roll Avocado",
+        category: "rolls",
+        price: 6500,
+        desc: "Pollo teriyaki y queso crema, envuelto en finas láminas de palta.",
+        img: "https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=500&q=80"
+      },
+      {
+        id: 4,
+        name: "Promo Kurama 30 Pzs",
+        category: "promos",
+        price: 18000,
+        desc: "10 Roll Avocado, 10 California Ebi y 10 Hot Rolls fritos en panko.",
+        img: "https://images.unsplash.com/photo-1617196034796-73dfa7b1fd56?auto=format&fit=crop&w=500&q=80"
+      }
+    ];
+
+    const categories = [
+      { id: "todos", label: "Todos" },
+      { id: "promos", label: "Promociones 🚀" },
+      { id: "rolls", label: "Rolls Especiales 🍣" },
+      { id: "california", label: "California 🥑" }
+    ];
+
+    let cart = [];
+    let selectedCategory = "todos";
+
+    // INIT
+    document.addEventListener("DOMContentLoaded", () => {
+      renderCategories();
+      renderProducts();
+      updateCartUI();
+      lucide.createIcons();
+    });
+
+    // RENDER CATEGORIES
+    function renderCategories() {
+      const filterContainer = document.getElementById("category-filters");
+      filterContainer.innerHTML = categories.map(cat => `
+        <button 
+          onclick="filterCategory('${cat.id}')"
+          class="px-4 py-2 rounded-xl text-sm font-semibold whitespace-nowrap transition-all border ${
+            selectedCategory === cat.id 
+              ? 'bg-neon-pink text-white border-neon-pink shadow-[0_0_15px_rgba(255,0,127,0.4)]' 
+              : 'bg-slate-900/60 text-slate-400 border-slate-800 hover:border-slate-700 hover:text-white'
+          }"
+        >
+          ${cat.label}
+        </button>
+      `).join("");
+    }
+
+    // FILTER CATEGORY
+    function filterCategory(catId) {
+      selectedCategory = catId;
+      renderCategories();
+      renderProducts();
+    }
+
+    // RENDER PRODUCTS
+    function renderProducts() {
+      const grid = document.getElementById("products-grid");
+      const filtered = selectedCategory === "todos" 
+        ? products 
+        : products.filter(p => p.category === selectedCategory);
+
+      grid.innerHTML = filtered.map(product => `
+        <div class="glass-card rounded-2xl overflow-hidden flex flex-col justify-between transition-all duration-300 transform hover:-translate-y-1">
+          <div class="relative h-48 overflow-hidden">
+            <img src="${product.img}" alt="${product.name}" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+            <span class="absolute top-3 right-3 bg-slate-900/80 backdrop-blur-md text-neon-cyan font-bold px-3 py-1 rounded-full text-xs border border-neon-cyan/30">
+              ${formatCLP(product.price)}
+            </span>
+          </div>
+
+          <div class="p-4 flex-1 flex flex-col justify-between">
+            <div>
+              <h3 class="text-lg font-bold text-white mb-1">${product.name}</h3>
+              <p class="text-slate-400 text-xs leading-relaxed mb-4">${product.desc}</p>
+            </div>
+
+            <button 
+              onclick="addToCart(${product.id})"
+              class="w-full bg-slate-800 hover:bg-neon-pink hover:text-white text-slate-200 font-semibold py-2.5 rounded-xl border border-slate-700 hover:border-neon-pink flex items-center justify-center gap-2 transition-all active:scale-95 text-sm"
+            >
+              <i data-lucide="plus" class="w-4 h-4"></i> Añadir al Pedido
+            </button>
+          </div>
+        </div>
+      `).join("");
+
+      lucide.createIcons();
+    }
+
+    // CART ACTIONS
+    function addToCart(productId) {
+      const existing = cart.find(item => item.id === productId);
+      if (existing) {
+        existing.quantity += 1;
+      } else {
+        const prod = products.find(p => p.id === productId);
+        cart.push({ ...prod, quantity: 1 });
+      }
+      updateCartUI();
+    }
+
+    function updateQuantity(productId, change) {
+      const index = cart.findIndex(item => item.id === productId);
+      if (index !== -1) {
+        cart[index].quantity += change;
+        if (cart[index].quantity <= 0) {
+          cart.splice(index, 1);
+        }
+      }
+      updateCartUI();
+    }
+
+    // UPDATE UI
+    function updateCartUI() {
+      const totalCount = cart.reduce((acc, item) => acc + item.quantity, 0);
+      const totalPrice = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+
+      document.getElementById("cart-count").innerText = totalCount;
+      document.getElementById("cart-total").innerText = formatCLP(totalPrice);
+      document.getElementById("modal-total").innerText = formatCLP(totalPrice);
+
+      // Render Modal Items
+      const cartItemsContainer = document.getElementById("cart-items");
+      if (cart.length === 0) {
+        cartItemsContainer.innerHTML = `<p class="text-slate-500 text-sm text-center py-4">Tu carrito está vacío 🍣</p>`;
+      } else {
+        cartItemsContainer.innerHTML = cart.map(item => `
+          <div class="flex items-center justify-between bg-slate-800/50 p-3 rounded-xl border border-slate-800">
+            <div class="flex-1 pr-2">
+              <h5 class="text-sm font-semibold text-white">${item.name}</h5>
+              <p class="text-xs text-neon-cyan">${formatCLP(item.price * item.quantity)}</p>
             </div>
             
-            <div class="modal-body" id="modal-items"></div>
-
-            <div class="inputs-group">
-                <input type="text" id="cust-name" placeholder="Tu Nombre">
-                <select id="delivery-type">
-                    <option value="Delivery">Reparto a Domicilio (Delivery)</option>
-                    <option value="Retiro">Retiro en Local</option>
-                </select>
-                <input type="text" id="cust-address" placeholder="Dirección exacta (si es delivery)">
+            <div class="flex items-center gap-2 bg-slate-900 border border-slate-700 rounded-lg p-1">
+              <button onclick="updateQuantity(${item.id}, -1)" class="w-6 h-6 flex items-center justify-center text-slate-400 hover:text-white rounded hover:bg-slate-800 text-xs">-</button>
+              <span class="text-xs font-bold w-4 text-center">${item.quantity}</span>
+              <button onclick="updateQuantity(${item.id}, 1)" class="w-6 h-6 flex items-center justify-center text-slate-400 hover:text-white rounded hover:bg-slate-800 text-xs">+</button>
             </div>
+          </div>
+        `).join("");
+      }
+    }
 
-            <div style="margin-top: 15px; text-align: right;">
-                <h3 id="modal-total" style="color: var(--accent-cyan);">$0</h3>
-            </div>
+    // FORMAT CURRENCY
+    function formatCLP(amount) {
+      return new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' }).format(amount);
+    }
 
-            <button class="checkout-btn" style="width: 100%; margin-top: 15px; justify-content: center;" onclick="sendWhatsApp()">
-                <i class="fa-brands fa-whatsapp"></i> Enviar Pedido a WhatsApp
-            </button>
-        </div>
-    </div>
+    // MODAL CONTROL
+    function openModal() {
+      if (cart.length === 0) {
+        alert("Agrega al menos un producto antes de ver tu pedido.");
+        return;
+      }
+      document.getElementById("checkout-modal").classList.remove("hidden");
+      document.getElementById("checkout-modal").classList.add("flex");
+    }
 
-    <script>
-        // MENU BASE (Apenas me envíes tus datos actualizamos esto)
-        const products = [
-            { id: 1, name: "Roll Acevichado", category: "rolls", price: 7500, desc: "Camarón furai, palta, queso crema, cubierto de pescado del día en salsa acevichada.", img: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=500&q=80" },
-            { id: 2, name: "California Ebi", category: "california", price: 6000, desc: "Camarón, palta y queso crema, envuelto en sésamo o ciboulette.", img: "https://images.unsplash.com/photo-1611143669185-af224c5e3252?auto=format&fit=crop&w=500&q=80" },
-            { id: 3, name: "Roll Avocado", category: "rolls", price: 6500, desc: "Pollo teriyaki y queso crema, envuelto en finas láminas de palta.", img: "https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=500&q=80" },
-            { id: 4, name: "Promo Kurama 30 Pzs", category: "promos", price: 18000, desc: "10 Roll Avocado, 10 California Ebi y 10 Hot Rolls fritos en panko.", img: "https://images.unsplash.com/photo-1617196034796-73dfa7b1fd56?auto=format&fit=crop&w=500&q=80" }
-        ];
+    function closeModal() {
+      document.getElementById("checkout-modal").classList.add("hidden");
+      document.getElementById("checkout-modal").classList.remove("flex");
+    }
 
-        let cart = [];
+    function toggleAddressField() {
+      const type = document.getElementById("delivery-type").value;
+      const addressContainer = document.getElementById("address-container");
+      if (type === "Retiro") {
+        addressContainer.style.display = "none";
+      } else {
+        addressContainer.style.display = "block";
+      }
+    }
 
-        function renderProducts(filter = 'todos') {
-            const container = document.getElementById('products-container');
-            container.innerHTML = '';
-            const filtered = filter === 'todos' ? products : products.filter(p => p.category === filter);
+    // WHATSAPP INTEGRATION
+    function sendOrderToWhatsApp() {
+      if (cart.length === 0) return;
 
-            filtered.forEach(p => {
-                container.innerHTML += `
-                    <div class="card">
-                        <div class="card-img-wrap">
-                            <img src="${p.img}" class="card-img" alt="${p.name}">
-                        </div>
-                        <div class="card-body">
-                            <h3 class="card-title">${p.name}</h3>
-                            <p class="card-desc">${p.desc}</p>
-                            <div class="card-footer">
-                                <span class="card-price">$${p.price.toLocaleString('es-CL')}</span>
-                                <button class="add-btn" onclick="addToCart(${p.id})">
-                                    <i class="fa-solid fa-plus"></i> Añadir
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            });
-        }
+      const name = document.getElementById("client-name").value.trim();
+      const type = document.getElementById("delivery-type").value;
+      const address = document.getElementById("client-address").value.trim();
 
-        function filterCategory(cat) {
-            document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            renderProducts(cat);
-        }
+      if (!name) {
+        alert("Por favor ingresa tu nombre completo.");
+        return;
+      }
 
-        function addToCart(id) {
-            const item = cart.find(i => i.id === id);
-            if (item) item.qty++;
-            else {
-                const prod = products.find(p => p.id === id);
-                cart.push({ ...prod, qty: 1 });
-            }
-            updateCart();
-        }
+      if (type === "Delivery" && !address) {
+        alert("Por favor ingresa tu dirección para el delivery.");
+        return;
+      }
 
-        function updateCart() {
-            const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
-            const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
-            document.getElementById('cart-count').innerText = totalQty;
-            document.getElementById('cart-total').innerText = `$${totalPrice.toLocaleString('es-CL')}`;
-            document.getElementById('modal-total').innerText = `Total: $${totalPrice.toLocaleString('es-CL')}`;
-            renderModalItems();
-        }
+      let orderItemsText = "";
+      cart.forEach(item => {
+        orderItemsText += `• ${item.quantity}x ${item.name} (${formatCLP(item.price * item.quantity)})\n`;
+      });
 
-        function changeQty(id, delta) {
-            const item = cart.find(i => i.id === id);
-            if (item) {
-                item.qty += delta;
-                if (item.qty <= 0) cart = cart.filter(i => i.id !== id);
-            }
-            updateCart();
-        }
+      const totalPrice = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
 
-        function renderModalItems() {
-            const container = document.getElementById('modal-items');
-            if (cart.length === 0) {
-                container.innerHTML = '<p style="text-align:center; color: #aaa;">Tu carrito está vacío.</p>';
-                return;
-            }
-            container.innerHTML = cart.map(i => `
-                <div class="cart-item">
-                    <div>
-                        <strong>${i.name}</strong><br>
-                        <small style="color:var(--text-sub)">$${i.price.toLocaleString('es-CL')} c/u</small>
-                    </div>
-                    <div style="display:flex; align-items:center; gap:8px;">
-                        <button class="qty-btn" onclick="changeQty(${i.id}, -1)">-</button>
-                        <span>${i.qty}</span>
-                        <button class="qty-btn" onclick="changeQty(${i.id}, 1)">+</button>
-                    </div>
-                </div>
-            `).join('');
-        }
+      let textMessage = `🍣 *NUEVO PEDIDO - KURAMA SUSHI*\n\n`;
+      textMessage += `👤 *Cliente:* ${name}\n`;
+      textMessage += `🛵 *Tipo:* ${type}\n`;
+      if (type === "Delivery") {
+        textMessage += `📍 *Dirección:* ${address}\n`;
+      }
+      textMessage += `\n📋 *Detalle del Pedido:*\n${orderItemsText}\n`;
+      textMessage += `💰 *Total a Pagar:* ${formatCLP(totalPrice)}`;
 
-        function openModal() { document.getElementById('cart-modal').classList.add('active'); }
-        function closeModal() { document.getElementById('cart-modal').classList.remove('active'); }
+      const phone = "56933570798";
+      const encodedUrl = `https://wa.me/${phone}?text=${encodeURIComponent(textMessage)}`;
 
-        function sendWhatsApp() {
-            if (cart.length === 0) return alert("Agrega un producto primero.");
-            const name = document.getElementById('cust-name').value.trim();
-            const type = document.getElementById('delivery-type').value;
-            const address = document.getElementById('cust-address').value.trim();
-
-            if (!name) return alert("Por favor ingresa tu nombre.");
-
-            let msg = `🍣 *NUEVO PEDIDO - KURAMA SUSHI*\n`;
-            msg += `👤 *Cliente:* ${name}\n`;
-            msg += `🛵 *Tipo:* ${type}\n`;
-            if (type === 'Delivery' && address) msg += `📍 *Dirección:* ${address}\n`;
-            msg += `\n📋 *Detalle:*\n`;
-
-            cart.forEach(i => {
-                msg += `• ${i.qty}x ${i.name} ($${(i.price * i.qty).toLocaleString('es-CL')})\n`;
-            });
-
-            const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
-            msg += `\n💰 *Total:* $${totalPrice.toLocaleString('es-CL')}`;
-
-            window.open(`https://wa.me/56933570798?text=${encodeURIComponent(msg)}`, '_blank');
-        }
-
-        renderProducts();
-    </script>
+      window.open(encodedUrl, "_blank");
+    }
+  </script>
 </body>
 </html>
