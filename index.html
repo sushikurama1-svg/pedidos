@@ -1079,4 +1079,29 @@ function changeCart(index,amount){
 
 function continueOrder(){
 
-  if(ca
+  if(cart.length===0){
+    alert("Tu pedido está vacío.");
+    return;
+  }
+
+  alert(
+    "Tu pedido está listo. Falta configurar el número de WhatsApp del local."
+  );
+}
+
+document.getElementById("configModal")
+.addEventListener("click",function(e){
+  if(e.target===this) closeConfig();
+});
+
+document.getElementById("cartModal")
+.addEventListener("click",function(e){
+  if(e.target===this) closeCart();
+});
+
+updateCart();
+
+</script>
+
+</body>
+</html>
