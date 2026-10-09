@@ -1081,6 +1081,10 @@ function renderCart(){
       <option value="Temuco Chico">Temuco Chico — $2.500</option>
       <option value="Antihuala">Antihuala — $3.000</option>
     </select>
+    </select>
+<input id="deliveryAddress" placeholder="Dirección (opcional)">
+<input id="deliveryReference" placeholder="Referencia (opcional)">
+</div>
   </div>
 
   <div id="deliveryTotal" style="margin-top:10px;font-weight:bold"></div>
@@ -1147,6 +1151,8 @@ function continueOrder(){
   const type=document.querySelector('input[name="deliveryType"]:checked')?.value||"Retiro";
   const sector=document.getElementById('deliverySector')?.value||"";
   let delivery=0;
+  const address=document.getElementById('deliveryAddress')?.value.trim()||"";
+const reference=document.getElementById('deliveryReference')?.value.trim()||"";
 
   if(type==="Delivery"){
     if(!sector){
@@ -1175,6 +1181,8 @@ function continueOrder(){
 
   if(type==="Delivery"){
     mensaje+="%0ADelivery: "+sector+" - "+money(delivery);
+    if(address) mensaje+="%0ADirección: "+address;
+if(reference) mensaje+="%0AReferencia: "+reference;
     total+=delivery;
   }else{
     mensaje+="%0AForma de entrega: Retiro en domicilio";
