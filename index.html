@@ -1058,6 +1058,33 @@ function renderCart(){
     <div class="total">
       Total: ${money(total)}
     </div>
+    <div style="margin-top:15px">
+  <strong>¿Cómo quieres recibir tu pedido?</strong>
+
+  <label class="opt">
+    <input type="radio" name="deliveryType" value="Retiro" checked onchange="updateDelivery()">
+    🏠 Retiro en domicilio
+  </label>
+
+  <label class="opt">
+    <input type="radio" name="deliveryType" value="Delivery" onchange="updateDelivery()">
+    🛵 Delivery
+  </label>
+
+  <div id="deliveryOptions" style="display:none;margin-top:10px">
+    <select id="deliverySector" onchange="updateDelivery()" style="width:100%;padding:12px;border-radius:10px">
+      <option value="">Selecciona tu sector</option>
+      <option value="Los Álamos">Los Álamos — $2.000</option>
+      <option value="Cerro Alto">Cerro Alto — $1.500</option>
+      <option value="Tres Pinos">Tres Pinos — $1.800</option>
+      <option value="La Araucana">La Araucana — $2.000</option>
+      <option value="Temuco Chico">Temuco Chico — $2.500</option>
+      <option value="Antihuala">Antihuala — $3.000</option>
+    </select>
+  </div>
+
+  <div id="deliveryTotal" style="margin-top:10px;font-weight:bold"></div>
+</div>
 
     <button class="confirm" onclick="continueOrder()">
       Continuar pedido
@@ -1078,10 +1105,56 @@ function changeCart(index,amount){
 }
 
 const WHATSAPP='56933570798';
-  function continueOrder(){
+  const DELIVERY_PRICES={
+  "Los Álamos":2000,
+  "Cerro Alto":1500,
+  "Tres Pinos":1800,
+  "La Araucana":2000,
+  "Temuco Chico":2500,
+  "Antihuala":3000
+};
+  function updateDelivery(){
+  const type=document.querySelector('input[name="deliveryType"]:checked')?.value;
+  const options=document.getElementById('deliveryOptions');
+  const sector=document.getElementById('deliverySector');
+  const totalBox=document.getElementById('deliveryTotal');
+
+  let total=cart.reduce((sum,x)=>sum+(x.price*x.qty),0);
+  let delivery=0;
+
+  if(type==="Delivery"){
+    options.style.display="block";
+
+    if(sector.value){
+      delivery=DELIVERY_PRICES[sector.value]||0;
+      totalBox.textContent="Delivery: "+money(delivery)+" · Total: "+money(total+delivery);
+    }else{
+      totalBox.textContent="Selecciona tu sector para calcular el delivery.";
+    }
+  }else{
+    options.style.display="none";
+    sector.value="";
+    totalBox.textContent="Total: "+money(total);
+  }
+}
+
+function continueOrder(){
   if(cart.length===0){
     alert("Tu pedido está vacío.");
     return;
+  }
+
+  const type=document.querySelector('input[name="deliveryType"]:checked')?.value||"Retiro";
+  const sector=document.getElementById('deliverySector')?.value||"";
+  let delivery=0;
+
+  if(type==="Delivery"){
+    if(!sector){
+      alert("Por favor selecciona tu sector.");
+      return;
+    }
+
+    delivery=DELIVERY_PRICES[sector]||0;
   }
 
   let total=0;
@@ -1098,10 +1171,19 @@ const WHATSAPP='56933570798';
     }
   });
 
-  mensaje+="%0ATotal: "+money(total);
+  mensaje+="%0ASubtotal: "+money(total);
+
+  if(type==="Delivery"){
+    mensaje+="%0ADelivery: "+sector+" - "+money(delivery);
+    total+=delivery;
+  }else{
+    mensaje+="%0AForma de entrega: Retiro en domicilio";
+  }
+
+  mensaje+="%0A%0ATOTAL: "+money(total);
 
   window.location.href="https://wa.me/"+WHATSAPP+"?text="+mensaje;
-  }
+}
 
 document.getElementById("configModal")
 .addEventListener("click",function(e){
