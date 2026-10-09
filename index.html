@@ -1182,7 +1182,7 @@ function continueOrder(){
 
   mensaje+="%0A%0ATOTAL: "+money(total);
 
-  const mensajeFinal=encodeURIComponent(mensaje);
+  const mensajeFinal=encodeURIComponent(mensaje.replaceAll("%0A","\n"));
 window.location.href="https://wa.me/"+WHATSAPP+"?text="+mensajeFinal;
 }
 
