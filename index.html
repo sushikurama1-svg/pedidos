@@ -1182,7 +1182,8 @@ function continueOrder(){
 
   mensaje+="%0A%0ATOTAL: "+money(total);
 
-  window.location.href="https://wa.me/"+WHATSAPP+"?text="+mensaje;
+  const mensajeFinal=encodeURIComponent(mensaje);
+window.location.href="https://wa.me/"+WHATSAPP+"?text="+mensajeFinal;
 }
 
 document.getElementById("configModal")
