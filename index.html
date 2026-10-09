@@ -172,4 +172,911 @@ section{
 .qty button{
   border:0;
   background:#f2e3ca;
-  width
+  width:35px;
+  height:35px;
+  font-size:18px;
+}
+
+.qty span{
+  width:30px;
+  text-align:center;
+  padding-top:8px;
+  font-weight:bold;
+}
+
+.add{
+  border:0;
+  border-radius:8px;
+  padding:10px 13px;
+  color:white;
+  background:var(--vino2);
+  font-weight:bold;
+  cursor:pointer;
+  flex:1;
+}
+
+.config{
+  width:100%;
+  border:0;
+  border-radius:9px;
+  padding:12px;
+  color:white;
+  background:var(--verde);
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.modal-bg{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:#000b;
+  z-index:2000;
+  padding:14px;
+  align-items:center;
+  justify-content:center;
+}
+
+.modal-bg.show{display:flex}
+
+.modal{
+  width:min(600px,100%);
+  max-height:92vh;
+  overflow:auto;
+  background:var(--papel);
+  border-radius:16px;
+  padding:20px;
+  box-shadow:0 20px 70px #000;
+}
+
+.modal h2{
+  color:var(--vino);
+  margin-top:0;
+}
+
+.close{
+  float:right;
+  border:0;
+  background:none;
+  font-size:28px;
+  cursor:pointer;
+}
+
+.option-group{
+  margin:15px 0;
+}
+
+.option-group h4{
+  margin:0 0 8px;
+  color:var(--vino);
+}
+
+select{
+  width:100%;
+  padding:11px;
+  border-radius:8px;
+  border:1px solid #c9ad7e;
+  background:white;
+  font-size:16px;
+}
+
+.check-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:8px;
+}
+
+.check{
+  border:1px solid #d4bd98;
+  border-radius:8px;
+  padding:10px;
+  background:white;
+}
+
+.check input{
+  margin-right:6px;
+}
+
+.confirm{
+  width:100%;
+  border:0;
+  padding:13px;
+  border-radius:9px;
+  background:var(--vino);
+  color:white;
+  font-weight:bold;
+  font-size:16px;
+}
+
+.cart-item{
+  border-bottom:1px solid #dbc7a8;
+  padding:12px 0;
+}
+
+.cart-item:last-child{border-bottom:0}
+
+.cart-row{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  align-items:center;
+}
+
+.cart-controls{
+  display:flex;
+  gap:5px;
+  align-items:center;
+}
+
+.cart-controls button{
+  border:0;
+  width:30px;
+  height:30px;
+  border-radius:6px;
+  background:#ead9bc;
+  font-weight:bold;
+}
+
+.cart-options{
+  font-size:12px;
+  color:#73584c;
+  margin:5px 0;
+}
+
+.total{
+  font-size:22px;
+  font-weight:bold;
+  color:var(--vino);
+  margin:15px 0;
+}
+
+.fixed-note{
+  background:#f1e3cc;
+  padding:10px;
+  border-radius:8px;
+  font-size:13px;
+  color:#684d43;
+}
+
+footer{
+  text-align:center;
+  color:#e8cda7;
+  padding:25px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      KURAMA
+      <small>SUSHI</small>
+    </div>
+
+    <button class="cart-button" onclick="openCart()">
+      🛒 Pedido <span class="cart-count" id="cartCount">0</span>
+    </button>
+  </div>
+
+  <nav>
+    <a href="#sushi">Sushi</a>
+    <a href="#cortes">Cortes</a>
+    <a href="#arma">Arma tu pedido</a>
+    <a href="#box">Box</a>
+    <a href="#agregar">Agregar</a>
+  </nav>
+</header>
+
+<main>
+
+<section id="sushi">
+  <h2 class="section-title">🍣 Sushi</h2>
+  <p class="section-subtitle">Sushi mixto a elección del chef.</p>
+  <div class="grid" id="sushiGrid"></div>
+</section>
+
+<section id="cortes">
+  <h2 class="section-title">🥢 Cortes</h2>
+  <p class="section-subtitle">
+    Elige 1 proteína y 2 ingredientes secundarios.
+  </p>
+  <div class="grid" id="cutsGrid"></div>
+</section>
+
+<section id="arma">
+  <h2 class="section-title">🍱 Arma tu pedido</h2>
+  <p class="section-subtitle">
+    Personaliza tu preparación a tu gusto.
+  </p>
+  <div class="grid" id="armaGrid"></div>
+</section>
+
+<section id="box">
+  <h2 class="section-title">📦 Box</h2>
+  <p class="section-subtitle">Opciones para compartir.</p>
+  <div class="grid" id="boxGrid"></div>
+</section>
+
+<section id="agregar">
+  <h2 class="section-title">➕ Agregar</h2>
+  <p class="section-subtitle">Acompañamientos.</p>
+  <div class="grid" id="addGrid"></div>
+</section>
+
+</main>
+
+<footer>
+  KURAMA SUSHI
+</footer>
+
+<!-- MODAL CONFIGURADOR -->
+<div class="modal-bg" id="configModal">
+  <div class="modal">
+    <button class="close" onclick="closeConfig()">×</button>
+    <h2 id="configTitle"></h2>
+    <div id="configBody"></div>
+    <button class="confirm" onclick="confirmConfig()">
+      Agregar al pedido
+    </button>
+  </div>
+</div>
+
+<!-- MODAL CARRITO -->
+<div class="modal-bg" id="cartModal">
+  <div class="modal">
+    <button class="close" onclick="closeCart()">×</button>
+    <h2>🛒 Tu pedido</h2>
+    <div id="cartBody"></div>
+  </div>
+</div>
+
+<script>
+
+const proteins=[
+  "Pollo apanado",
+  "Camarón"
+];
+
+const secondary=[
+  "Queso",
+  "Palta",
+  "Morrón",
+  "Cebollín",
+  "Champiñón"
+];
+
+const wrappings=[
+  "Panko",
+  "Tempura"
+];
+
+let cart=[];
+let currentConfig=null;
+
+function money(n){
+  return "$"+n.toLocaleString("es-CL");
+}
+
+function esc(text){
+  return String(text)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;");
+}
+
+function addSimple(name,price,qty=1,options=""){
+  const key=name+"|"+options;
+
+  const existing=cart.find(x=>x.key===key);
+
+  if(existing){
+    existing.qty+=qty;
+  }else{
+    cart.push({
+      key,
+      name,
+      price,
+      qty,
+      options
+    });
+  }
+
+  updateCart();
+}
+
+function updateCart(){
+  const count=cart.reduce((a,b)=>a+b.qty,0);
+  document.getElementById("cartCount").textContent=count;
+}
+
+function productCard(name,price,description,button){
+  return `
+    <div class="card">
+      <h3>${esc(name)}</h3>
+      <div class="description">${description}</div>
+      <div class="price">${money(price)}</div>
+      ${button}
+    </div>
+  `;
+}
+
+/* SUSHI */
+
+const sushi=[
+  [30,13500],
+  [40,17500],
+  [50,22500],
+  [60,27500]
+];
+
+document.getElementById("sushiGrid").innerHTML=sushi.map(x=>{
+  return productCard(
+    "Sushi mixto "+x[0],
+    x[1],
+    "Sushi mixto a elección del chef. El chef determina la mezcla.",
+    `<div class="actions">
+      <div class="qty">
+        <button onclick="changeTempQty(this,-1)">−</button>
+        <span>1</span>
+        <button onclick="changeTempQty(this,1)">+</button>
+      </div>
+      <button class="add" onclick="addSimple('Sushi mixto ${x[0]}',${x[1]})">
+        Agregar
+      </button>
+    </div>`
+  );
+}).join("");
+
+function changeTempQty(btn,amount){
+  const span=btn.parentElement.querySelector("span");
+  let n=parseInt(span.textContent)+amount;
+  if(n<1)n=1;
+  span.textContent=n;
+}
+
+/* CORTES */
+
+const cuts=[
+  ["Panko",5000],
+  ["Tempura",5000],
+  ["Queso",5500],
+  ["Palta",5500],
+  ["Nori",4500],
+  ["Sésamo",4500]
+];
+
+document.getElementById("cutsGrid").innerHTML=cuts.map(c=>{
+  return productCard(
+    "Corte "+c[0],
+    c[1],
+    "1 proteína + 2 ingredientes secundarios.",
+    `<button class="config" onclick="openCut('${c[0]}',${c[1]})">
+      Personalizar
+    </button>`
+  );
+}).join("");
+
+/* ARMA */
+
+const arma=[
+  ["Handroll",4000,2,true],
+  ["Handroll XL",7500,3,true],
+  ["Sushiburguer",7500,3,true],
+  ["Gohan",7000,5,false],
+  ["Rollo cevichado de camarón",8000,2,true],
+  ["Acevichado XL",10000,3,true]
+];
+
+document.getElementById("armaGrid").innerHTML=arma.map(x=>{
+  return productCard(
+    x[0],
+    x[1],
+    x[3]
+      ? `1 proteína + ${x[2]} ingredientes secundarios + envoltura.`
+      : `Hasta ${x[2]} ingredientes. Sin envoltura.`,
+    `<button class="config" onclick="openArma('${x[0]}',${x[1]},${x[2]},${x[3]})">
+      Personalizar
+    </button>`
+  );
+}).join("");
+
+/* BOX */
+
+document.getElementById("boxGrid").innerHTML=
+
+productCard(
+  "Box normal",
+  21000,
+  "2 rollos acevichados + 6 aros de cebolla fritos + 6 rollos primavera.",
+  `<button class="config" onclick="openBoxNormal()">
+    Personalizar los 2 rollos
+  </button>`
+)+
+
+productCard(
+  "Box",
+  14000,
+  "3 handrolls: pollo, palta y queso + 6 rollos primavera.",
+  `<div class="fixed-note">✓ Producto fijo. No se puede modificar.</div>
+   <button class="add" style="margin-top:10px"
+   onclick="addSimple('Box $14.000',14000,'')">
+   Agregar
+   </button>`
+)+
+
+productCard(
+  "Box Premium",
+  32000,
+  "40 piezas de sushi + 6 empanadas de queso + 6 rollos primavera + 6 aros de cebolla fritos + 5 piezas de pollo apanado.",
+  `<div class="fixed-note">✓ Producto fijo. No se puede modificar.</div>
+   <button class="add" style="margin-top:10px"
+   onclick="addSimple('Box Premium',32000,'')">
+   Agregar
+   </button>`
+);
+
+/* AGREGAR */
+
+const extras=[
+  ["6 Aros de cebolla fritos",3000],
+  ["6 Rollos primavera",3000],
+  ["6 Empanadas de queso",3000]
+];
+
+document.getElementById("addGrid").innerHTML=extras.map(x=>{
+  return productCard(
+    x[0],
+    x[1],
+    "Acompañamiento.",
+    `<div class="actions">
+      <div class="qty">
+        <button onclick="changeTempQty(this,-1)">−</button>
+        <span>1</span>
+        <button onclick="changeTempQty(this,1)">+</button>
+      </div>
+      <button class="add" onclick="addSimple('${x[0]}',${x[1]})">
+        Agregar
+      </button>
+    </div>`
+  );
+}).join("");
+
+/* CONFIGURADOR */
+
+function openCut(wrapping,price){
+  currentConfig={
+    name:"Corte "+wrapping,
+    price,
+    secondaryCount:2,
+    wrapping
+  };
+
+  showConfig();
+}
+
+function openArma(name,price,count,hasWrapping){
+  currentConfig={
+    name,
+    price,
+    secondaryCount:count,
+    hasWrapping
+  };
+
+  showConfig();
+}
+
+function showConfig(){
+  document.getElementById("configTitle").textContent=
+    "Personalizar "+currentConfig.name;
+
+  let html=`
+
+    <div class="option-group">
+      <h4>Proteína</h4>
+      <select id="proteinSelect">
+        ${proteins.map(x=>`<option>${x}</option>`).join("")}
+      </select>
+    </div>
+
+    <div class="option-group">
+      <h4>Ingredientes secundarios</h4>
+      <div class="check-grid">
+        ${secondary.map((x,i)=>`
+          <label class="check">
+            <input type="checkbox"
+              class="secondaryCheck"
+              value="${x}">
+            ${x}
+          </label>
+        `).join("")}
+      </div>
+    </div>
+  `;
+
+  if(currentConfig.hasWrapping){
+    html+=`
+      <div class="option-group">
+        <h4>Envoltura</h4>
+        <select id="wrappingSelect">
+          ${wrappings.map(x=>`<option>${x}</option>`).join("")}
+        </select>
+      </div>
+    `;
+  }
+
+  if(currentConfig.wrapping){
+    html+=`
+      <div class="fixed-note">
+        Envoltura: <strong>${currentConfig.wrapping}</strong>
+      </div>
+    `;
+  }
+
+  document.getElementById("configBody").innerHTML=html;
+
+  document
+    .querySelectorAll(".secondaryCheck")
+    .forEach(cb=>{
+      cb.addEventListener("change",limitSecondary);
+    });
+
+  document.getElementById("configModal").classList.add("show");
+}
+
+function limitSecondary(){
+  const checked=
+    document.querySelectorAll(".secondaryCheck:checked");
+
+  if(
+    currentConfig.secondaryCount &&
+    checked.length>currentConfig.secondaryCount
+  ){
+    this.checked=false;
+    alert(
+      "Puedes elegir solo "+
+      currentConfig.secondaryCount+
+      " ingredientes secundarios."
+    );
+  }
+}
+
+function confirmConfig(){
+
+  const protein=
+    document.getElementById("proteinSelect").value;
+
+  const selected=[
+    ...document.querySelectorAll(".secondaryCheck:checked")
+  ].map(x=>x.value);
+
+  if(
+    selected.length!==currentConfig.secondaryCount
+  ){
+    alert(
+      "Debes elegir exactamente "+
+      currentConfig.secondaryCount+
+      " ingredientes secundarios."
+    );
+    return;
+  }
+
+  let wrapping=currentConfig.wrapping||"";
+
+  if(currentConfig.hasWrapping){
+    wrapping=document.getElementById("wrappingSelect").value;
+  }
+
+  const options=
+    "Proteína: "+protein+
+    " | Secundarios: "+selected.join(", ")+
+    (wrapping ? " | Envoltura: "+wrapping : "");
+
+  addSimple(
+    currentConfig.name,
+    currentConfig.price,
+    1,
+    options
+  );
+
+  closeConfig();
+}
+
+function closeConfig(){
+  document.getElementById("configModal").classList.remove("show");
+}
+
+/* GOHAN */
+
+function openGohan(){
+  currentConfig={
+    name:"Gohan",
+    price:7000,
+    secondaryCount:5,
+    gohan:true
+  };
+
+  document.getElementById("configTitle").textContent=
+    "Personalizar Gohan";
+
+  document.getElementById("configBody").innerHTML=`
+
+    <div class="option-group">
+      <h4>Elige hasta 5 ingredientes</h4>
+
+      <div class="check-grid">
+        ${[
+          "Pollo apanado",
+          "Camarón",
+          "Queso",
+          "Palta",
+          "Morrón",
+          "Cebollín",
+          "Champiñón"
+        ].map(x=>`
+          <label class="check">
+            <input type="checkbox"
+              class="gohanCheck"
+              value="${x}">
+            ${x}
+          </label>
+        `).join("")}
+      </div>
+    </div>
+  `;
+
+  document.querySelectorAll(".gohanCheck")
+    .forEach(cb=>{
+      cb.addEventListener("change",()=>{
+        const n=
+          document.querySelectorAll(".gohanCheck:checked").length;
+
+        if(n>5){
+          cb.checked=false;
+          alert("El Gohan permite hasta 5 ingredientes.");
+        }
+      });
+    });
+
+  document.getElementById("configModal").classList.add("show");
+
+  document.querySelector(".confirm").onclick=confirmGohan;
+}
+
+function confirmGohan(){
+
+  const selected=[
+    ...document.querySelectorAll(".gohanCheck:checked")
+  ].map(x=>x.value);
+
+  if(selected.length<1){
+    alert("Elige al menos 1 ingrediente.");
+    return;
+  }
+
+  addSimple(
+    "Gohan",
+    7000,
+    1,
+    "Ingredientes: "+selected.join(", ")
+  );
+
+  document.querySelector(".confirm").onclick=confirmConfig;
+
+  closeConfig();
+}
+
+/* reemplazar función para que Gohan abra correctamente */
+
+document.querySelectorAll("#armaGrid .card").forEach((card,index)=>{
+  if(arma[index][0]==="Gohan"){
+    card.querySelector(".config").onclick=()=>{
+      openGohan();
+    };
+  }
+});
+
+/* BOX NORMAL */
+
+function openBoxNormal(){
+  currentConfig={
+    box:true,
+    roll1:null,
+    roll2:null
+  };
+
+  document.getElementById("configTitle").textContent=
+    "Personalizar Box normal";
+
+  document.getElementById("configBody").innerHTML=`
+
+    <h3>Rollo 1</h3>
+
+    <div class="option-group">
+      <h4>Proteína</h4>
+      <select id="boxP1">
+        ${proteins.map(x=>`<option>${x}</option>`).join("")}
+      </select>
+    </div>
+
+    <div class="option-group">
+      <h4>2 secundarios</h4>
+      <div class="check-grid">
+        ${secondary.map(x=>`
+          <label class="check">
+            <input class="b1" type="checkbox" value="${x}">
+            ${x}
+          </label>
+        `).join("")}
+      </div>
+    </div>
+
+    <div class="option-group">
+      <h4>Envoltura</h4>
+      <select id="boxW1">
+        ${wrappings.map(x=>`<option>${x}</option>`).join("")}
+      </select>
+    </div>
+
+    <hr>
+
+    <h3>Rollo 2</h3>
+
+    <div class="option-group">
+      <h4>Proteína</h4>
+      <select id="boxP2">
+        ${proteins.map(x=>`<option>${x}</option>`).join("")}
+      </select>
+    </div>
+
+    <div class="option-group">
+      <h4>2 secundarios</h4>
+      <div class="check-grid">
+        ${secondary.map(x=>`
+          <label class="check">
+            <input class="b2" type="checkbox" value="${x}">
+            ${x}
+          </label>
+        `).join("")}
+      </div>
+    </div>
+
+    <div class="option-group">
+      <h4>Envoltura</h4>
+      <select id="boxW2">
+        ${wrappings.map(x=>`<option>${x}</option>`).join("")}
+      </select>
+    </div>
+  `;
+
+  document.getElementById("configModal").classList.add("show");
+
+  document.querySelector(".confirm").onclick=confirmBox;
+}
+
+function confirmBox(){
+
+  const s1=[
+    ...document.querySelectorAll(".b1:checked")
+  ].map(x=>x.value);
+
+  const s2=[
+    ...document.querySelectorAll(".b2:checked")
+  ].map(x=>x.value);
+
+  if(s1.length!==2 || s2.length!==2){
+    alert("Cada rollo debe tener exactamente 2 secundarios.");
+    return;
+  }
+
+  const options=
+    "Rollo 1: "+
+    document.getElementById("boxP1").value+
+    " / "+
+    s1.join(", ")+
+    " / "+
+    document.getElementById("boxW1").value+
+    " | Rollo 2: "+
+    document.getElementById("boxP2").value+
+    " / "+
+    s2.join(", ")+
+    " / "+
+    document.getElementById("boxW2").value;
+
+  addSimple(
+    "Box normal",
+    21000,
+    1,
+    options
+  );
+
+  document.querySelector(".confirm").onclick=confirmConfig;
+
+  closeConfig();
+}
+
+/* CARRITO */
+
+function openCart(){
+  renderCart();
+  document.getElementById("cartModal").classList.add("show");
+}
+
+function closeCart(){
+  document.getElementById("cartModal").classList.remove("show");
+}
+
+function renderCart(){
+
+  const body=document.getElementById("cartBody");
+
+  if(cart.length===0){
+    body.innerHTML="<p>Tu pedido está vacío.</p>";
+    return;
+  }
+
+  let total=0;
+
+  body.innerHTML=cart.map((item,index)=>{
+
+    const subtotal=item.price*item.qty;
+    total+=subtotal;
+
+    return `
+      <div class="cart-item">
+
+        <div class="cart-row">
+          <strong>${esc(item.name)}</strong>
+          <strong>${money(subtotal)}</strong>
+        </div>
+
+        ${
+          item.options
+          ? `<div class="cart-options">${esc(item.options)}</div>`
+          : ""
+        }
+
+        <div class="cart-row">
+
+          <span>${money(item.price)} c/u</span>
+
+          <div class="cart-controls">
+            <button onclick="changeCart(${index},-1)">−</button>
+            <span>${item.qty}</span>
+            <button onclick="changeCart(${index},1)">+</button>
+          </div>
+
+        </div>
+
+      </div>
+    `;
+
+  }).join("")+
+
+  `
+    <div class="total">
+      Total: ${money(total)}
+    </div>
+
+    <button class="confirm" onclick="continueOrder()">
+      Continuar pedido
+    </button>
+  `;
+}
+
+function changeCart(index,amount){
+
+  cart[index].qty+=amount;
+
+  if(cart[index].qty<=0){
+    cart.splice(index,1);
+  }
+
+  updateCart();
+  renderCart();
+}
+
+function continueOrder(){
+
+  if(ca
