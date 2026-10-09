@@ -1077,17 +1077,31 @@ function changeCart(index,amount){
   renderCart();
 }
 
-function continueOrder(){
-
+const WHATSAPP='56933570798';
+  function continueOrder(){
   if(cart.length===0){
     alert("Tu pedido está vacío.");
     return;
   }
 
-  alert(
-    "Tu pedido está listo. Falta configurar el número de WhatsApp del local."
-  );
-}
+  let total=0;
+  let mensaje="Hola, quiero hacer el siguiente pedido en Kurama Sushi:%0A%0A";
+
+  cart.forEach((x,i)=>{
+    let subtotal=x.price*x.qty;
+    total+=subtotal;
+
+    mensaje+=(i+1)+". "+x.name+" x"+x.qty+" - "+money(subtotal)+"%0A";
+
+    if(x.options.length){
+      mensaje+="   "+x.options.join(" | ")+"%0A";
+    }
+  });
+
+  mensaje+="%0ATotal: "+money(total);
+
+  window.location.href="https://wa.me/"+WHATSAPP+"?text="+mensaje;
+  }
 
 document.getElementById("configModal")
 .addEventListener("click",function(e){
