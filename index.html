@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>KURAMA SUSHI</title>
+
+<style>
+:root{
+  --rojo:#7d2630;
+  --rojo2:#a43b42;
+  --dorado:#c79b55;
+  --crema:#f5ead6;
+  --papel:#fff9ed;
+  --marron:#3b241d;
+  --texto:#291c18;
+  --verde:#355c45;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+
+body{
+  margin:0;
+  font-family:Georgia,"Times New Roman",serif;
+  color:var(--texto);
+  background:
+    radial-gradient(circle at 15% 20%,#6d392b 0,transparent 25%),
+    linear-gradient(135deg,#291813,#5b3024 45%,#241510);
+}
+
+/* ---------- ENCABEZADO ---------- */
+
+header{
+  position:sticky;
+  top:0;
+  z-index:1000;
+  background:rgba(45,25,19,.96);
+  border-bottom:2px solid var(--dorado);
+  box-shadow:0 5px 20px #0008;
+}
+
+.header-inner{
+  max-width:1200px;
+  margin:auto;
+  padding:12px 16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+
+.logo{
+  color:#fff;
+  font-weight:bold;
+  letter-spacing:3px;
+  font-size:20px;
+}
+
+.logo small{
+  display:block;
+  color:var(--dorado);
+  font-size:10px;
+  letter-spacing:4px;
+  text-align:center;
+}
+
+.cart-button{
+  border:0;
+  background:var(--rojo2);
+  color:white;
+  border-radius:30px;
+  padding:11px 16px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.cart-count{
+  background:white;
+  color:var(--rojo);
+  border-radius:50%;
+  padding:2px 7px;
+  margin-left:5px;
+}
+
+.categories{
+  overflow-x:auto;
+  white-space:nowrap;
+  padding:8px 12px 12px;
+  scrollbar-width:none;
+}
+
+.categories::-webkit-scrollbar{display:none}
+
+.categories a{
+  display:inline-block;
+  color:#fff;
+  text-decoration:none;
+  padding:8px 14px;
+  margin-right:5px;
+  border:1px solid #c79b5560;
+  border-radius:20px;
+  font-size:13px;
+  background:#ffffff0d;
+}
+
+.categories a:hover{
+  background:var(--dorado);
+  color:#2d1913;
+}
+
+/* ---------- PAPEL CENTRAL ---------- */
+
+.paper{
+  width:min(94%,1000px);
+  margin:25px auto 50px;
+  background:
+    radial-gradient(#8b694115 1px,transparent 1px),
+    var(--papel);
+  background-size:8px 8px;
+  box-shadow:0 20px 60px #0009;
+  padding:25px 16px 60px;
+  position:relative;
+  border-radius:4px;
+}
+
+.paper:before,
+.paper:after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  height:10px;
+  background:#fff9ed;
+  clip-path:polygon(0 20%,4% 70%,9% 30%,14% 75%,20% 25%,27% 70%,34% 30%,41% 75%,50% 25%,58% 70%,65% 25%,72% 75%,80% 30%,87% 70%,94% 25%,100% 65%,100% 100%,0 100%);
+}
+
+.paper:before{top:-5px}
+.paper:after{bottom:-5px;transform:rotate(180deg)}
+
+.brand{
+  text-align:center;
+  margin:8px auto 25px;
+}
+
+.fox{
+  font-size:55px;
+  line-height:1;
+}
+
+.brand h1{
+  margin:3px 0 0;
+  color:var(--rojo);
+  font-size:38px;
+  letter-spacing:5px;
+}
+
+.brand h2{
+  margin:0;
+  color:var(--dorado);
+  font-size:16px;
+  letter-spacing:8px;
+}
+
+.ornament{
+  color:var(--dorado);
+  margin:10px;
+  letter-spacing:8px;
+}
+
+/* ---------- SECCIONES ---------- */
+
+section{
+  scroll-margin-top:130px;
+  margin-top:45px;
+}
+
+.section-title{
+  text-align:center;
+  color:var(--rojo);
+  font-size:28px;
+  margin-bottom:7px;
+}
+
+.section-subtitle{
+  text-align:center;
+  color:#76584c;
+  font-size:13px;
+  margin-bottom:20px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:14px;
+}
+
+.card{
+  background:#fffdf7;
+  border:1px solid #d6bd91;
+  border-radius:12px;
+  padding:16px;
+  box-shadow:0 5px 15px #573b2412;
+}
+
+.card h3{
+  margin:0 0 7px;
+  color:var(--rojo);
+  font-size:20px;
+}
+
+.description{
+  font-size:13px;
+  color:#6d574c;
+  min-height:40px;
+}
+
+.price{
+  color:var(--rojo);
+  font-size:21px;
+  font-weight:bold;
+  margin:10px 0;
+}
+
+.card-actions{
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+
+.qty{
+  display:flex;
+  align-items:center;
+  border:1px solid #c9ad7e;
+  border-radius:8px;
+  overflow:hidden;
+}
+
+.qty button{
+  border:0;
+  background:#f2e3ca;
+  width:32px;
+  height:34px;
+  font-size:18px;
+  cursor:pointer;
+}
+
+.qty span{
+  width:30px;
+  text-align:center;
+  font-weight:bold;
+}
+
+.add{
+  flex:1;
+  border:0;
+  border-radius:8px;
+  padding:10px;
+  color:white;
+  background:var(--rojo);
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.add:hover{
+  background:var(--rojo2);
+}
+
+/* ---------- MODAL ---------- */
+
+.modal-bg{
+  position:fixed;
+  inset:0;
+  background:#0009;
+  z-index:2000;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:15px;
+}
+
+.modal-bg.show{display:flex}
+
+.modal{
+  width:min(560px,100%);
+  max-height:90vh;
+  overflow:auto;
+  background:var(--papel);
+  border-radius:15px;
+  padding:22px;
+  box-shadow:0 20px 70px #000;
+}
+
+.modal h2{
+  color:var(--rojo);
+  margin-top:0;
+}
+
+.close{
+  float:right;
+  border:0;
+  background:none;
+  font-size:28px;
+  cursor:pointer;
+}
+
+.option-group{
+  margin:18px 0;
+}
+
+.option-group h3{
+  color:var(--rojo);
+  margin-bottom:8px;
+}
+
+.option{
+  display:block;
+  padding:9px;
+  margin:6px 0;
+  border:1px solid #d2bc98;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.option input{
+  margin-right:8px;
+}
+
+.confirm{
+  width:100%;
+  border:0;
+  padding:13px;
+  background:var(--verde);
+  color:#fff;
+  font-weight:bold;
+  border-radius:9px;
+  cursor:pointer;
+  font-size:16px;
+}
+
+/* ---------- CARRITO ---------- */
+
+.cart-item{
+  border-bottom:1px solid #dcc9a9;
+  padding:12px 0;
+}
+
+.cart-item strong{
+  color:var(--rojo);
+}
+
+.cart-total{
+  font-size:23px;
+  font-weight:bold;
+  text-align:right;
+  color:var(--rojo);
+  margin:20px 0;
+}
+
+.remove{
+  border:0;
+  background:#8e3030;
+  color:white;
+  border-radius:5px;
+  padding:5px 8px;
+  cursor:pointer;
+}
+
+.empty{
+  text-align:center;
+  color:#80695c;
+  padding:20px;
+}
+
+footer{
+  text-align:center;
+  color:#e9d6b5;
+  padding:30px 15px 45px;
+  font-size:13px;
+}
+
+/* ---------- RESPONSIVE ---------- */
+
+@media(max-width:600px){
+  .paper{
+    width:96%;
+    padding:20px 11px 45px;
+  }
+
+  .brand h1{
+    font-size:30px;
+  }
+
+  .fox{
+    font-size:45px;
+  }
+
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  .header-inner{
+    padding:10px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      KURAMA
+      <small>SUSHI</small>
+    </div>
+
+    <button class="cart-button" onclick="openCart()">
+      🛒 Pedido
+      <span id="cartCount" class="cart-count">0</span>
+    </button>
+  </div>
+
+  <nav class="categories">
+    <a href="#sushi">Sushi</a>
+    <a href="#cortes">Cortes</a>
+    <a href="#arma">Arma tu pedido</a>
+    <a href="#box">Box</a>
+    <a href="#agregar">Agregar</a>
+  </nav>
+</header>
+
+<main class="paper">
+
+  <div class="brand">
+    <div class="fox">🦊</div>
+    <div class="ornament">✦ ❖ ✦</div>
+    <h1>KURAMA</h1>
+    <h2>SUSHI</h2>
+    <div class="ornament">──── ✦ ────</div>
+  </div>
+
+  <!-- SUSHI -->
+  <section id="sushi">
+    <h2 class="section-title">Sushi</h2>
+    <p class="section-subtitle">
+      Sushi mixto a elección del chef
+    </p>
+
+    <div class="grid">
+
+      <div class="card">
+        <h3>Sushi mixto · 30 piezas</h3>
+        <p class="description">
+          Selección de sushi mixto a elección del chef.
+        </p>
+        <div class="price">$13.500</div>
+        <div class="card-actions">
+          <div class="qty">
+            <button onclick="changeQty(this,-1)">−</button>
+            <span>1</span>
+            <button onclick="changeQty(this,1)">+</button>
+          </div>
+          <button class="add" onclick="addSimple(this,'Sushi mixto 30 piezas',13500)">
+            Agregar
+          </button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Sushi mixto · 40 piezas</h3>
+        <p class="description">
+          Selección de sushi mixto a elección del chef.
+        </p>
+        <div class="price">$17.500</div>
+        <div class="card-actions">
+          <div class="qty">
+            <button onclick="changeQty(this,-1)">−</button>
+            <span>1</span>
+            <button onclick="changeQty(this,1)">+</button>
+          </div>
+          <button class="add" onclick="addSimple(this,'Sushi mixto 40 piezas',17500)">
+            Agregar
+          </button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Sushi mixto · 50 piezas</h3>
+        <p class="description">
+          Selección de sushi mixto a elección del chef.
+        </p>
+        <div class="price">$22.500</div>
+        <div class="card-actions">
+          <div class="qty">
+            <button onclick="changeQty(this,-1)">−</button>
+            <span>1</span>
+            <button onclick="changeQty(this,1)">+</button>
+          </div>
+          <button class="add" onclick="addSimple(this,'Sushi mixto 50 piezas',22500)">
+            Agregar
+          </button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Sushi mixto · 60 piezas</h3>
+        <p class="description">
+          Selección de sushi mixto a elección del chef.
+        </p>
+        <div class="price">$27.500</div>
+        <div class="card-actions">
+          <div class="qty">
+            <button onclick="changeQty(this,-1)">−</button>
+            <span>1</span>
+            <button class="add" onclick="addSimple(this,'Sushi mixto 60 piezas',27500)">
+              Agregar
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CORTES -->
+  <section id="cortes">
+    <h2 class="section-title">Cortes</h2>
+    <p class="section-subtitle">
+      Elige 1 proteína y 2 ingredientes secundarios
+    </p>
+
+    <div class="grid" id="cutsGrid"></div>
+  </section>
+
+  <!-- ARMA TU PEDIDO -->
+  <section id="arma">
+    <h2 class="section-title">Arma tu pedido</h2>
+    <p class="section-subtitle">
+      Personaliza tu pedido con los ingredientes permitidos
+    </p>
+
+    <div class="grid">
+
+      <div class="card">
+        <h3>Handroll</h3>
+        <p class="description">1 proteína · 2 secundarios · Panko o Tempura</p>
+        <div class="price">$4.000</div>
+        <button class="add" onclick="openConfigurator('Handroll',4000,1,2,true)">
+          Personalizar
+        </button>
+      </div>
+
+      <div class="card">
+        <h3>Handroll XL</h3>
+        <p class="description">
