@@ -1154,49 +1154,55 @@ function continueOrder(){
   }
 
   const type=document.querySelector('input[name="deliveryType"]:checked')?.value||"Retiro";
-  const sector=document.getElementById('deliverySector')?.value||"";
+  const sector=document.getElementById("deliverySector")?.value||"";
+  const address=document.getElementById("deliveryAddress")?.value.trim()||"";
+  const reference=document.getElementById("deliveryReference")?.value.trim()||"";
   let delivery=0;
-  const address=document.getElementById('deliveryAddress')?.value.trim()||"";
-const reference=document.getElementById('deliveryReference')?.value.trim()||"";
 
   if(type==="Delivery"){
     if(!sector){
       alert("Por favor selecciona tu sector.");
       return;
     }
-
     delivery=DELIVERY_PRICES[sector]||0;
   }
 
   let total=0;
-  let mensaje="Hola, quiero hacer el siguiente pedido en Kurama Sushi:%0A%0A";
+  let mensaje="Hola, quiero hacer el siguiente pedido en Kurama Sushi:\n\n";
 
   cart.forEach((x,i)=>{
-    let subtotal=x.price*x.qty;
+    const subtotal=x.price*x.qty;
     total+=subtotal;
 
-    mensaje+=(i+1)+". "+x.name+" x"+x.qty+" - "+money(subtotal)+"%0A";
+    mensaje+=(i+1)+". "+x.name+" x"+x.qty+" - "+money(subtotal)+"\n";
 
     if(x.options.length){
-      mensaje+="   "+x.options.join(" | ")+"%0A";
+      mensaje+="   "+x.options.join(" | ")+"\n";
     }
   });
 
-  mensaje+="%0ASubtotal: "+money(total);
+  mensaje+="\nSubtotal: "+money(total);
 
   if(type==="Delivery"){
-    mensaje+="%0ADelivery: "+sector+" - "+money(delivery);
-    if(address) mensaje+="%0ADirección: "+address;
-if(reference) mensaje+="%0AReferencia: "+reference;
+    mensaje+="\nDelivery: "+sector+" - "+money(delivery);
+
+    if(address){
+      mensaje+="\nDirección: "+address;
+    }
+
+    if(reference){
+      mensaje+="\nReferencia: "+reference;
+    }
+
     total+=delivery;
   }else{
-    mensaje+="%0AForma de entrega: Retiro en domicilio";
+    mensaje+="\nForma de entrega: Retiro en domicilio";
   }
 
-  mensaje+="%0A%0ATOTAL: "+money(total);
+  mensaje+="\n\nTOTAL: "+money(total);
 
-  const mensajeFinal=encodeURIComponent(mensaje.replaceAll("%0A","\n"));
-window.location.href="https://wa.me/"+WHATSAPP+"?text="+mensajeFinal;
+  const mensajeFinal=encodeURIComponent(mensaje);
+  window.location.href="https://wa.me/"+WHATSAPP+"?text="+mensajeFinal;
 }
 
 document.getElementById("configModal")
